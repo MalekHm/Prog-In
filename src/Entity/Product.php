@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository", repositoryClass=ProductRepository::class)
  */
 class Product
 {
@@ -19,92 +22,162 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
-    private $nameProduct;
+    private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
-    private $descriptionProduct;
+    private $description;
+
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     * @Assert\Positive (
+     *      message = "price '{{ getPriceProduct }}' is not valid."
+     * )
      */
-    private $categoryProduct;
+    private $price;
+
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Category;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $priceProduct;
+    private $pricer;
 
     /**
-     * @ORM\ManyToOne(targetEntity=admin::class, inversedBy="id__admin")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $id_admin;
+    private $quantity;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", orphanRemoval=true, cascade={"persist"})
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNameProduct(): ?string
+    public function getName(): ?string
     {
-        return $this->nameProduct;
+        return $this->name;
     }
 
-    public function setNameProduct(string $nameProduct): self
+    public function setName(string $name): self
     {
-        $this->nameProduct = $nameProduct;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getDescriptionProduct(): ?string
+    public function getDescription(): ?string
     {
-        return $this->descriptionProduct;
+        return $this->description;
     }
 
-    public function setDescriptionProduct(string $descriptionProduct): self
+    public function setDescription(string $description): self
     {
-        $this->descriptionProduct = $descriptionProduct;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getCategoryProduct(): ?string
+
+
+    public function getPrice(): ?float
     {
-        return $this->categoryProduct;
+        return $this->price;
     }
 
-    public function setCategoryProduct(string $categoryProduct): self
+    public function setPrice(float $price): self
     {
-        $this->categoryProduct = $categoryProduct;
+        $this->price = $price;
 
         return $this;
     }
 
-    public function getPriceProduct(): ?float
+    public function getCategory(): ?Category
     {
-        return $this->priceProduct;
+        return $this->Category;
     }
 
-    public function setPriceProduct(float $priceProduct): self
+    public function setCategory(?Category $Category): self
     {
-        $this->priceProduct = $priceProduct;
+        $this->Category = $Category;
 
         return $this;
     }
 
-    public function getIdAdmin(): ?admin
+    public function getPricer(): ?float
     {
-        return $this->id_admin;
+        return $this->pricer;
     }
 
-    public function setIdAdmin(?admin $id_admin): self
+    public function setPricer(float $pricer): self
     {
-        $this->id_admin = $id_admin;
+        $this->pricer = $pricer;
 
         return $this;
     }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

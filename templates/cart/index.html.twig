@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+{% block title %}  {% endblock %}
+
+{% block body %}
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/single_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Votre panier</div>
+        </div>
+    </div>
+
+<center>
+
+    <div class="bg-light p-3">
+        <h3> Vos achats </h3>
+    </div>
+
+{% if  items | length > 0%}
+<table  class="table table-bordered table-striped table-condensed" style="width:50%">
+    <thead>
+    <tr>
+        <th>Produit</th>
+        <th>Prix de vente</th>
+        <th>Quantite</th>
+        <th>Sous-Total</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items  %}
+       <tr>
+           <td>{{ item.product.name }}</td>
+           <td>{{ item.product.price }}</td>
+           <td>{{ item.quantity }}</td>
+           <td>{{ item.product.price * item.quantity }}</td>
+           <td>
+               <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">
+               Annuler</a>
+           </td>
+       </tr>
+    {% endfor %}
+
+    </tbody>
+    <tfoot>
+    <td colspan="3" class="text-right"> Total des achats: </td>
+    <td> {{ total }}</td>
+    </tfoot>
+
+</table>
+
+    </center>
+{% else %}
+<p> c'est vide!</p>
+{% endif %}
+
+
+    <center>
+
+    <div class="bg-light p-3">
+        <h3> Vos locations </h3>
+    </div>
+
+    {% if  itemsr | length > 0%}
+        <table  class="table table-bordered table-striped table-condensed" style="width:50%">
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix de location</th>
+                <th>Quantite</th>
+                <th>Sous-Total</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for itemr in itemsr  %}
+                <tr>
+                    <td>{{ itemr.product.name }}</td>
+                    <td>{{ itemr.product.pricer }}</td>
+                    <td>{{ itemr.quantity }}</td>
+                    <td>{{ itemr.product.pricer * itemr.quantity }}</td>
+                    <td>
+                        <a href="{{ path('cart_remover', {'id': itemr.product.id}) }}" class="btn btn-danger btn-sm">Annuler</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot>
+            <td colspan="3" class="text-right"> Total des commandes: </td>
+            <td> {{ totalf }}</td>
+            </tfoot>
+            <tfoot>
+            <td colspan="3" class="text-right"> Total des locations: </td>
+            <td> {{ totalr }}</td>
+            </tfoot>
+
+
+        </table>
+
+
+    {% else %}
+        <p> c'est vide!</p>
+    {% endif %}
+
+    <div class="button home_slider_button"><div class="button_bcg"></div><a href="{{ path('product_front') }}">Poursuivre mes achats </a></div>
+    <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">Passer ma commande </a></div>
+    </center>
+{% endblock %}
+
+
+
+
+

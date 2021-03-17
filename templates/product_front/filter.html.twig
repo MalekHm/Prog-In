@@ -1,0 +1,60 @@
+<table  style="width:100%">
+{{ form_start(form , {'attr': {'class': 'search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start'}})}}
+<tr>
+    <td>
+    <div class="search_item">
+        <div> Produits </div>
+             {{ form_row(form.q , {'attr': {'class': 'destination search_input'}}) }}
+    </div>
+    </td>
+
+    <td>
+        <div class="search_item">
+            <div> Categories </div>
+            {{ form_row(form.categories) }}
+           </div>
+   </div>
+    </td>
+
+    <td>
+        <div class="search_item">
+            <div> PrixVente </div>
+        </div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.min) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.max) }}
+    </div>
+</div>
+
+
+<div id="slider"> </div>
+
+        <div class="search_item">
+            <div> PrixLocation </div>
+        </div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.mini) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.maxi) }}
+    </div>
+</div>
+
+<div id="slider">
+</div>
+
+
+    <td>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button  class="btn btn-outline-warning" type="submit"> Filtrer </button>
+    </div>
+
+    </td>
+</tr>
+{{  form_end(form) }}
+
+</table>
