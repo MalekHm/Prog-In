@@ -1,0 +1,15 @@
+{% if publicitytop  %}
+<a href="{{ publicitytop[0].link }}">
+<section  class="section-divider textdivider divider3">
+    <div class="container">
+        <h1 class="fade-down section-title">{{ publicitytop[0].titlePub }}</h1>
+        <hr>
+        <p class="fade-up">{{ publicitytop[0].descriptionPub }}</p>
+        <center>
+            <img  class="img fade-down" style="height: 250px"  src="/publicity/{{ publicitytop[0].picturePub }}" >
+        </center>
+
+    </div>
+</section>
+</a>
+{% endif %}

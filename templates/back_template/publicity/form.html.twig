@@ -1,0 +1,112 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block content %}
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">{{ title }}</div>
+            <hr>
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+                <div class="form-group">
+                    <label for="input-1">Title</label>
+                    {{ form_widget(form.titlePub) }}
+                </div>
+            <div class="form-group">
+                <label for="input-1">Link</label>
+                {{ form_widget(form.link) }}
+            </div>
+                <div class="form-group">
+                    <label for="input-2">Description</label>
+                    {{ form_widget(form.descriptionPub) }}
+                </div>
+                <div class="form-group">
+                    <label for="input-3">Start Date  </label>
+                    {{ form_widget(form.startDatePub, { attr:{ class:'js-datepicker' } }) }}
+                    <div class="text-danger">
+                        {{ form_errors(form.startDatePub) }}
+                    </div>
+                 </div>
+
+            <div class="form-group">
+                <label for="input-4">End Date  </label>
+                {{ form_widget(form.endDatePub, { attr:{ class:'js-datepicker' } }) }}
+                <div class="text-danger">
+                    {{ form_errors(form.endDatePub) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-4">Position  </label>
+                {{ form_widget(form.position) }}
+
+            </div>
+
+            <div class="form-group">
+                <label for="input-4">Publicity Picture  </label>
+                <div class="picture-container">
+                    <div class="picture" onchange="yes()">
+                        {% if publicity.picturePub %}
+
+                            {{ form_widget(form.picturePub, {'id' : 'pic' , 'required':false}) }}
+                            <div class="text-danger">
+                                {{ form_errors(form.picturePub) }}
+                            </div>
+                            <center>
+                                <img src="/publicity/{{ publicity.picturePub }}" style="height: 140px"
+                                     class="picture-src" id="wizardPicturePreview" title=""/>
+                            </center>
+
+
+                        {% else %}
+                            {{ form_widget(form.picturePub , {'id' : 'pic' }) }}
+                            <div class="text-danger">
+                                {{ form_errors(form.picturePub) }}
+                            </div>
+                            <center>
+                                <img src=""
+                                     class="picture-src" id="wizardPicturePreview" style="height: 140px" title=""/>
+                            </center>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+
+            <center>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success px-10 w-25"><i class="icon-lock"></i> Save</button>
+                    </div>
+                </center>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+<script>
+    function yes(){
+        var e= document.getElementById("pic");
+        readURL(e);
+    }
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+{% endblock %}
