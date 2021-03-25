@@ -6,12 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User  implements UserInterface
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_CLIENT = 'ROLE_CLIENT';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -35,7 +38,8 @@ class User
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
@@ -60,35 +64,21 @@ class User
     private $phone;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ReservationProduct", mappedBy="client")
+     * @ORM\Column(type="string", length=255)
      */
-    private $reservationProducts;
-
+    private $role;
     /**
-     * @ORM\OneToMany(targetEntity=ReservationEvent::class, mappedBy="idClient")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $id_client;
+    private $resetToken;
 
-    /**
-     * @return mixed
-     */
-    public function getReservationProducts()
-    {
-        return $this->reservationProducts;
-    }
 
-    /**
-     * @param mixed $reservationProducts
-     */
-    public function setReservationProducts($reservationProducts): void
-    {
-        $this->reservationProducts = $reservationProducts;
-    }
+
+
+
 
     public function __construct()
     {
-        $this->id_user = new ArrayCollection();
-        $this->id_client = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,17 +122,24 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @return string
+     */
+    public function getPassword()
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
+
+
+
 
     public function getIdentity(): ?int
     {
@@ -192,43 +189,61 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection|Reservationproduct[]
-     */
-    public function getIdUser(): Collection
-    {
-        return $this->id_user;
-    }
-
-
 
     /**
-     * @return Collection|ReservationEvent[]
+     * @return mixed
      */
-    public function getIdClient(): Collection
+    public function getRole()
     {
-        return $this->id_client;
+        return $this->role;
     }
 
-    public function addIdClient(ReservationEvent $idClient): self
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
     {
-        if (!$this->id_client->contains($idClient)) {
-            $this->id_client[] = $idClient;
-            $idClient->setIdClient($this);
-        }
-
-        return $this;
+        $this->role = $role;
     }
 
-    public function removeIdClient(ReservationEvent $idClient): self
+    /**
+     * @return mixed
+     */
+    public function getResetToken()
     {
-        if ($this->id_client->removeElement($idClient)) {
-            // set the owning side to null (unless already changed)
-            if ($idClient->getIdClient() === $this) {
-                $idClient->setIdClient(null);
-            }
-        }
-
-        return $this;
+        return $this->resetToken;
     }
+
+    /**
+     * @param mixed $resetToken
+     */
+    public function setResetToken($resetToken): void
+    {
+        $this->resetToken = $resetToken;
+    }
+
+
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+
+    public function getRoles()
+    {
+        return [$this->role];
+    }
+
+
 }

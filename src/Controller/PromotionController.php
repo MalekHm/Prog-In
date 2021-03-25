@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/back/template/promotions")
+ * @Route("/admin/promotions")
  */
 class PromotionController extends AbstractController
 {
@@ -57,18 +57,20 @@ class PromotionController extends AbstractController
             $transporter->setStreamOptions($https);
             $mailer = new \Swift_Mailer($transporter);
             foreach ($this->getDoctrine()->getRepository(User::class)->findAll() as $client) {
+                if($client->getRole()=='ROLE_CLIENT'){
+                    $message = (new \Swift_Message('New Promotion'))
+                        ->setFrom('promoesprit@gmail.com')
+                        ->setTo($client->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'emails/welcome.html.twig',
+                                ['promotion' => $promotion]
+                            ),
+                            'text/html'
+                        );
+                    $mailer->send($message);
+                }
 
-                $message = (new \Swift_Message('New Promotion'))
-                    ->setFrom('promoesprit@gmail.com')
-                    ->setTo($client->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            'emails/welcome.html.twig',
-                            ['promotion' => $promotion]
-                        ),
-                        'text/html'
-                    );
-                $mailer->send($message);
             }
             $this->addFlash('success', 'Promotion added successfully');
             return $this->redirectToRoute('back_template_promotions');

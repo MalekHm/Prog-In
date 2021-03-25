@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BackTemplateController extends AbstractController
 {
     /**
-     * @Route("/back/template", name="back_template")
+     * @Route("/admin/", name="back_template")
      */
     public function index(): Response
     {

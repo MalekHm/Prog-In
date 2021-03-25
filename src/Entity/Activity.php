@@ -25,33 +25,27 @@ class Activity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $category;
+    private $adressActivity;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $descriptionActivity;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $price;
+    private $priceActivity;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Categoryactivity::class, inversedBy="activities")
      */
-    private $adressActivity;
+    private $category;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $description;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $picture;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=admin::class, inversedBy="id_Admiiin")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $idAdmin;
+    private $likes;
 
     public function getId(): ?int
     {
@@ -70,30 +64,6 @@ class Activity
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getAdressActivity(): ?string
     {
         return $this->adressActivity;
@@ -106,38 +76,50 @@ class Activity
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescriptionActivity(): ?string
     {
-        return $this->description;
+        return $this->descriptionActivity;
     }
 
-    public function setDescription(string $description): self
+    public function setDescriptionActivity(string $descriptionActivity): self
     {
-        $this->description = $description;
+        $this->descriptionActivity = $descriptionActivity;
 
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function getPriceActivity(): ?float
     {
-        return $this->picture;
+        return $this->priceActivity;
     }
 
-    public function setPicture(string $picture): self
+    public function setPriceActivity(float $priceActivity): self
     {
-        $this->picture = $picture;
+        $this->priceActivity = $priceActivity;
 
         return $this;
     }
 
-    public function getIdAdmin(): ?admin
+    public function getCategory(): ?Categoryactivity
     {
-        return $this->idAdmin;
+        return $this->category;
     }
 
-    public function setIdAdmin(?admin $idAdmin): self
+    public function setCategory(?Categoryactivity $category): self
     {
-        $this->idAdmin = $idAdmin;
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }

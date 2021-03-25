@@ -38,12 +38,6 @@ class Product
     private $priceProduct;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin", inversedBy="products")
-     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    private $admin;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Promotion", mappedBy="product")
      */
     private $promotion;
@@ -102,21 +96,6 @@ class Product
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAdmin()
-    {
-        return $this->admin;
-    }
-
-    /**
-     * @param mixed $admin
-     */
-    public function setAdmin($admin): void
-    {
-        $this->admin = $admin;
-    }
 
 
 

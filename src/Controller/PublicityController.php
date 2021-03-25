@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/back/template/publicitys")
+ * @Route("/admin/publicitys")
  */
 class PublicityController extends AbstractController
 {
