@@ -31,8 +31,18 @@
                 <th>Quantite</th>
                 <td>{{ product.quantity }}</td>
             </tr>
+            <tr>
+                <th>Les images</th>
+                <td>
+                    {% for image in product.images %}
+                            <img src="{{ asset('/uploads/' ~ image.name) }} " alt="Image" width="100">
+                    {% endfor %}
+                </td>
+            </tr>
+
         </tbody>
     </table>
+
 
     <a href="{{ path('product_index') }}">
         <button type="button" class="btn btn-light">Retourner a la liste</button>

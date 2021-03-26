@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Images;
 
 /**
- * @Route("/product")
+ * @Route("/admin/product")
  */
 class ProductController extends AbstractController
 {

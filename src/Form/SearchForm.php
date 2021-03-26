@@ -62,9 +62,6 @@ class SearchForm extends AbstractType
                     'placeholder' => 'Prix max'
                 ]
             ])
-
-
-
         ;
     }
 

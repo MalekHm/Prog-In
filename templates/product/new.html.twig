@@ -7,27 +7,32 @@
    {{ form_start(form) }}
 <div class="card">
     <div class="card-body">
-        <div class="card-title">Créer un nouveau produit</div>
+        <div class="card-title">Ajouter un nouveau produit</div>
         <hr>
 
         <div class="form-group">
             <label for="input-6">Nom de produit</label>
+            {{ form_errors(form.name) }}
             {{ form_widget(form.name ,{'attr': {'class': 'form-control'}}) }}
         </div>
         <div class="form-group">
             <label for="input-7">Description</label>
+            {{ form_errors(form.description) }}
             {{ form_widget(form.description ,{'attr': {'class': 'form-control'}}) }}
         </div>
         <div class="form-group">
             <label for="input-8">Prix vente</label>
+            {{ form_errors(form.price) }}
             {{ form_widget(form.price ,{'attr': {'class': 'form-control'}}) }}
         </div>
         <div class="form-group">
             <label for="input-6">Prix location</label>
+            {{ form_errors(form.pricer) }}
             {{ form_widget(form.pricer ,{'attr': {'class': 'form-control'}}) }}
         </div>
         <div class="form-group">
             <label for="input-6">Quantite</label>
+            {{ form_errors(form.quantity) }}
             {{ form_widget(form.quantity ,{'attr': {'class': 'form-control'}}) }}
         </div>
         <div class="form-group">
@@ -36,12 +41,13 @@
         </div>
         <div class="form-group">
             <label for="input-9">Images</label>
+            {{form_errors(form.images) }}
             {{ form_widget(form.images ,{'attr': {'class': 'form-control'}}) }}
         </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-light btn-round px-5">
                     <i class="icon-lock">
-                    </i> {{ button_label|default('Enregistrer') }}
+                    {{ form_widget(form.enregistrer , {'attr': {'class': 'btn btn-light btn-round px-5'}})}}
+                    </i>
                 </button>
             </div>
 

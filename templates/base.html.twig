@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Hikerz</title>
+    <script src="https://js.stripe.com/v3/"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -28,8 +29,9 @@
 
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_link_tags('app') | replace({'src=': 'defer src='}) | raw }}
+
 </head>
-</head>
+
 
 <body>
 
@@ -147,149 +149,7 @@
 
     <!-- Search -->
 {% block body %}
-    <div class="search">
-        <div class="search_inner">
 
-            <!-- Search Contents -->
-
-            <div class="container fill_height no-padding">
-                <div class="row fill_height no-margin">
-                    <div class="col fill_height no-padding">
-
-                        <!-- Search -->
-                        <div class="search_panel active">
-                            <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                                <table style="width:100%" >
-                                    <tr>
-                                        <td>
-                                            <h4 class="section_title" >PRIX VENTE</h4>
-                                        </td>
-                                        <td>
-                                            <form action="croissant" method="get" >
-
-                                                <button class="btn btn-light" type="submit" style="width: auto"><i class="gg-arrow-up-o"></i></button>
-                                            </form>
-
-                                        </td>
-                                        <td>
-
-                                            <form action="decroissant" method="get" >
-                                                <button class="btn btn-light" type="submit" style="width: auto"><i class="gg-arrow-down-o"></i></button>
-                                            </form>
-                                        </td>
-                                        <!-- Intro -->
-                                        <td>
-                                            <form name="form1" action="maxmin" method="get" onsubmit="required()" >
-
-
-                                        <td>
-                                            <input class="form-control" type="text" name ="min" size="10"  placeholder="min">
-                                        </td><td>
-                                            <input class="form-control" type="text" name ="max" size="10"  placeholder="max">
-                                        </td>
-                                        <td>
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-
-                                                <button class="btn btn-outline-warning" >Chercher<span></span><span></span><span></span></button>
-                                            </div>
-                                        </td>
-
-
-                            </form>
-                            </td>
-
-                            <tr>
-                                <td>
-                                    <h1 class="section_title" >PRIX LOCATION</h1>
-                                </td>
-                                <td>
-                                    <form action="croissantr" method="get" >
-
-                                        <button class="btn btn-light" type="submit" style="width: auto"><i class="gg-arrow-up-o"></i></button>
-                                    </form>
-
-                                </td>
-                                <td>
-                                    <form action="decroissantr" method="get" >
-                                        <button class="btn btn-light" type="submit" style="width: auto"><i class="gg-arrow-down-o"></i></button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form name="form2" action="maxminr" method="get" onsubmit="requiredr()" >
-
-                                <td>
-                                    <input class="form-control" type="text" name ="min" size="10"  placeholder="min">
-                                </td><td>
-                                    <input class="form-control" type="text" name ="max" size="10"  placeholder="max">
-                                </td>
-                                <td>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-
-                                        <button class="btn btn-outline-warning">Chercher<span></span><span></span><span></span></button>
-                                    </div>
-                                </td>
-
-                                </form>
-                                </td>
-                            </tr>
-                            </table>
-
-
-                            <!-- CTA -->
-
-
-                            <!-- Offers -->
-
-                            <div class="offers">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h2 class="section_title">Tous nos produits</h2>
-                                        </div>
-                                    </div>
-                                    <div class="row offers_items">
-
-                                        <!-- Offers Item -->
-                                        {% for i in product %}
-                                            <div class="col-lg-6 offers_col">
-                                                <div class="offers_item">
-
-                                                    <div class="row">
-
-                                                        <div class="col-lg-6">
-                                                            <div class="offers_image_container">
-                                                                <!-- Image by https://unsplash.com/@kensuarez -->
-                                                                <div class="offers_image_background" style="background-image:url({{ asset('front/images/offer_1.jpg') }})"></div>
-                                                                <div class="offer_name"><a href="#">{{ i.name }}</a></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="offers_content">
-                                                                <div class="offers_price">{{ i.price }}<span>DT/ Vente</span></div>
-                                                                <br>
-                                                                <div class="offers_price">{{ i.pricer }}<span>DT/ Location</span></div>
-                                                                <p class="offers_text">{{ i.description }}</p>
-                                                                <div class="offers_icons">
-                                                                    <ul class="offers_icons_list">
-                                                                        <li class="offers_icons_item"><img src="{{ asset('front/images/post.png') }}" alt=""></li>
-                                                                        <li class="offers_icons_item"><img src="{{ asset('front/images/compass.png') }}" alt=""></li>
-                                                                        <li class="offers_icons_item"><img src="{{ asset('front/images/bicycle.png') }}" alt=""></li>
-                                                                        <li class="offers_icons_item"><img src="{{ asset('front/images/sailboat.png') }}" alt=""></li>
-                                                                    </ul>
-                                                                </div>
-                                                                <p class="offers_text" >Quantité : {{ i.quantity }}</p>
-                                                                <div class="offers_link"><a href="{{ path('product_reserver',{'id':i.id}) }}">Réserver</a></div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
 {% endblock %}
                             <!-- Footer -->
 

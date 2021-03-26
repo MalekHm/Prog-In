@@ -22,26 +22,31 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
      */
     private $description;
 
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
      * @Assert\Positive (
-     *      message = "price '{{ getPriceProduct }}' is not valid."
+     *      message = "Ce prix n'est pas valide."
      * )
      */
     private $price;
-
 
 
     /**
@@ -52,16 +57,26 @@ class Product
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
+     *  @Assert\Positive (
+     *      message = "Ce prix n'est pas valide."
+     * )
      */
     private $pricer;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
      */
     private $quantity;
 
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
      */
     private $images;
 
