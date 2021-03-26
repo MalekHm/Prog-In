@@ -1,0 +1,166 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Evennements</div>
+        </div>
+    </div>
+
+    <!-- Offers -->
+
+    <div class="offers">
+
+        <!-- Search -->
+
+    <div class="search">
+    <div class="search_inner">
+
+
+
+        <!-- Search Contents -->
+
+        <div class="container fill_height no-padding">
+            <div class="row fill_height no-margin">
+                <div class="col fill_height no-padding">
+
+                    <div class="search_panel active">
+                        <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+
+                            {% include 'evennement_front/FilterEvent.html.twig' with {form: form} only %}
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+        <!-- Offers -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1 temp_col"></div>
+                <div class="col-lg-8">
+
+                    <!-- Offers Sorting -->
+                    <div class="offers_sorting_container">
+                        <ul class="offers_sorting">
+                            <li>
+                                
+                                <span class="sorting_text">Catégorie</span>
+                                <i class="fa fa-chevron-down"></i>
+                                <ul>
+                                    {% for c in categories %}
+                                    <li class="sort_btn"  data-isotope-option='{ "sortBy": "original-order" }' 
+                                        data-parent=".price_sorting"><span>{{ c.name }}</span></li>
+                                {% endfor %}
+                                </ul>
+
+                            </li>
+                            <ul class="offers_sorting">
+                                    <ul>
+                                            <li class="sort_btn"  data-isotope-option='{ "sortBy": "original-order" }'
+                                                data-parent=".price_sorting">Trier Par :</li>
+
+                                    </ul>
+                            </ul>
+                            <ul class="offers_sorting">
+                                <ul>
+                                    <li class="sort_btn"  data-isotope-option='{ "sortBy": "original-order" }'
+                                        data-parent=".price_sorting"><a href="{{ path('trierpardate') }}">date</a></li>
+
+                                </ul>
+                            </ul>
+                            <ul class="offers_sorting">
+                                <ul>
+                                    <li class="sort_btn"  data-isotope-option='{ "sortBy": "original-order" }'
+                                        data-parent=".price_sorting"><a href="{{ path('trierparPrice') }}">Prix</a></li>
+
+                                </ul>
+                            </ul>
+                        </ul>
+                    </div>
+                     </div>
+                <div class="col-lg-3">
+                <div class="button"><div class="button_bcg"></div><a href="#">Vos réservations<span></span><span></span><span></span></a></div>
+                </div>
+                <div class="col-lg-12">
+                    <!-- Offers Grid -->
+
+                    <div class="offers_grid">
+
+                        <!-- Offers Item -->
+
+
+                        <!-- Offers Item -->
+
+
+                        <!-- Offers Item -->
+
+                        <!-- Offers Item -->
+
+
+                        <!-- Offers Item -->
+
+                        {% for i in events %}
+                        <div class="offers_item rating_3">
+
+                            <div class="row">
+                                <div class="col-lg-1 temp_col"></div>
+                                <div class="col-lg-3 col-1680-4">
+                                    <div class="offers_image_container">
+                                        <!-- Image by https://unsplash.com/@itsnwa -->
+                                        <div class="offers_image_background" style="background-image:url({{ asset('/uploads/') }}{{ i.image }})"></div>
+                                        <div class="offer_name"><a href="#">{{ i.startDate }}</a></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="offers_content">
+                                        <div class="offers_price">{{ i.titre }}</div>
+                                        <div class="rating_r rating_r_3 offers_rating" data-rating="3">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="offers_text">{{ i.description }}</p>
+                                        <div class="offers_icons">
+                                            <ul class="offers_icons_list">
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/post.png') }}" alt=""></li>
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/compass.png') }}" alt=""></li>
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/bicycle.png') }}" alt=""></li>
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/sailboat.png') }}" alt=""></li>
+                                            </ul>
+                                        </div>
+                                        <div class="button book_button"><a href="{{ path('evennement_show',{'id':i.id}) }}">Consulter<span></span><span></span><span></span></a></div>
+                                        <div class="offer_reviews">
+                                            <div class="offer_reviews_content">
+                                                <div class="offer_reviews_title">{{ i.Category }}</div>
+
+                                                <div class="offer_reviews_subtitle">{{ i.nbPersons }} Personnes</div>
+                                            </div>
+                                            <div class="offer_reviews_rating text-center">{{ i.priceEvent }}DT <span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

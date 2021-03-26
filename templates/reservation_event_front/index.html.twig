@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Vos réservations</div>
+        </div>
+    </div>
+
+
+
+    <!-- CTA -->
+
+    <div class="cta">
+        <!-- Image by https://unsplash.com/@thanni -->
+        <div class="cta_background" style="background: linear-gradient(to right, #fa9e1b, #8d4fff, #fa9e1b);color: white;">
+          <div class="container">
+            <div class="row">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom de l'événement</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Nombre de personnes</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        <td>@mdo</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
