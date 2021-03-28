@@ -1,0 +1,42 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Community index{% endblock %}
+
+{% block content %}
+    <h1>Community index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Grp_name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for community in communities %}
+            <tr>
+                <td>{{ community.id }}</td>
+                <td>{{ community.grpName }}</td>
+                <td>{{ community.email }}</td>
+                <td>{{ community.phone }}</td>
+                <td>{{ community.description }}</td>
+                <td>
+                    <a href="{{ path('community_show', {'id': community.id}) }}">Show</a>
+                    <a href="{{ path('community_edit', {'id': community.id}) }}">Edit</a>
+                    <a href="{{ path('community_delete', {'id': community.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('community_new') }}">Create new Community</a>
+{% endblock %}
