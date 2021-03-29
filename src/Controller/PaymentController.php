@@ -79,8 +79,9 @@ class PaymentController extends AbstractController
     /**
      * @Route("/facture",name="facture")
      */
-    public function showfacture():Response{
-        return $this->render('payment/facture.html.twig');
+    public function showfacture(SessionInterface $session, ProductRepository $productRepository ): Response{
+
+
     }
 
     /**
@@ -123,18 +124,51 @@ class PaymentController extends AbstractController
      * @Route("/create-checkout-session", name="checkout")
      *
      */
-    public function checkout()
+    public function checkout(SessionInterface $session, ProductRepository $productRepository ): Response
     {
+        $panier = $session->get('panier' , []);
+        $panierWithData = [];
+        foreach ($panier as $id => $quantity){
+            $panierWithData[] = [
+                'product' => $productRepository-> find($id),
+                'quantity' => $quantity
+            ];
+        }
+        $panierr = $session->get('panierr' , []);
+        $panierWithDatar = [];
+        foreach ($panierr as $id => $quantity){
+            $panierWithDatar[] = [
+                'product' => $productRepository-> find($id),
+                'quantity' => $quantity
+            ];
+        }
+        $total = 0;
+        foreach ($panierWithData as $item) {
+            $totalItem = $item['product']->getPrice() * $item['quantity'];
+            $total += $totalItem;
+
+        }
+        $totalr= 0;
+        foreach ($panierWithDatar as $itemr) {
+            $totalrItem = $itemr['product']->getPricer() * $itemr['quantity'];
+            $totalr += $totalrItem;
+        }
+
+
+        $totalf= $totalr + $total;
+        $fraislivraison= 7.00;
+        $totalfinal= $fraislivraison + $totalf;
+
         \Stripe\Stripe::setApiKey('sk_test_51IYAqkFZNE9gSdmYXgtJuw1A5n3ytWL2VCAYzSmOw73EiqAu8gjdjrWUkq19sUVcnixESeDBvhRCya8uP7sAH21d00PfsEIN2Z');
         $session = \Stripe\Checkout\Session::create([
            'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'usd',
+                    'currency' => 'eur',
                     'product_data' => [
-                        'name' => 'T-shirt',
+                        'name' => 'Total commandes',
                         ],
-                    'unit_amount' => 2000,
+                    'unit_amount' => $totalf,
                     ],
                 'quantity' => 1,
                 ]],
@@ -142,7 +176,15 @@ class PaymentController extends AbstractController
             'success_url' => $this->generateUrl('success', [], UrlGeneratorInterface::ABSOLUTE_URL),
             'cancel_url'=>  $this->generateUrl('error', [], UrlGeneratorInterface::ABSOLUTE_URL),
             ]);
-        return new JsonResponse(['id' => $session->id]);
+        return new JsonResponse(['id' => $session->id,
+        'controller_name' => 'PaymentController',
+            'items' => $panierWithData,
+            'itemsr' => $panierWithDatar,
+            'total' => $total,
+            'totalr' => $totalr,
+            'totalf' => $totalf,
+            'totalfinal' => $totalfinal,
+            'fraislivraison' => $fraislivraison]);
 
     }
 

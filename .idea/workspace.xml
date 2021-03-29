@@ -20,37 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c24e21c-d0a2-412c-9af0-190d67347f2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20210325215757.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/OrderController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/PaymentController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Order.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/ProductOrder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/ProductOrderRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/FacturePdf/FacturePdf.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/checkout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/order_front/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/payment/Facture.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/payment/error.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/payment/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/payment/success.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/progin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/progin.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210315201409.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ProductType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProductType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SearchForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SearchForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/FacturePdf/FacturePdf.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/FacturePdf/FacturePdf.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cart/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/payment/error.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/payment/error.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/payment/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/payment/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/payment/success.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/payment/success.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product_front/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product_front/list.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +169,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../projetrim/Prog-In-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -224,10 +202,10 @@
       <command value="symfony make:crud Category" />
       <command value="symfony make:crud ReservationProduct" />
       <command value="symfony make:crud Product" />
-      <command value="symfony server:run" />
       <command value="symfony cache:clear" />
       <command value="symfony make:migration" />
       <command value="symfony doctrine:migrations:migrate" />
+      <command value="symfony server:run" />
     </option>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -249,7 +227,9 @@
       <workItem from="1615766015078" duration="1650000" />
       <workItem from="1615767689229" duration="32258000" />
       <workItem from="1615987780365" duration="47794000" />
-      <workItem from="1616625817988" duration="48400000" />
+      <workItem from="1616625817988" duration="50417000" />
+      <workItem from="1616929695815" duration="1791000" />
+      <workItem from="1616941119586" duration="8371000" />
     </task>
     <servers />
   </component>
@@ -284,26 +264,26 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="119" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1616713600446" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1616766485823">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1616930875411">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1616766485823" />
-    <state width="1323" height="96" key="GridCell.Tab.0.bottom" timestamp="1616712054272">
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1616930875411" />
+    <state width="1323" height="383" key="GridCell.Tab.0.bottom" timestamp="1616971384601">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="96" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1616712054272" />
-    <state width="1323" height="96" key="GridCell.Tab.0.center" timestamp="1616712054271">
+    <state width="1323" height="383" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1616971384601" />
+    <state width="1323" height="383" key="GridCell.Tab.0.center" timestamp="1616971384601">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="96" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1616712054271" />
-    <state width="1323" height="96" key="GridCell.Tab.0.left" timestamp="1616712054271">
+    <state width="1323" height="383" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1616971384601" />
+    <state width="1323" height="383" key="GridCell.Tab.0.left" timestamp="1616971384600">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="96" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1616712054271" />
-    <state width="1323" height="96" key="GridCell.Tab.0.right" timestamp="1616712054272">
+    <state width="1323" height="383" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1616971384600" />
+    <state width="1323" height="383" key="GridCell.Tab.0.right" timestamp="1616971384601">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="96" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1616712054272" />
+    <state width="1323" height="383" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1616971384601" />
     <state x="511" y="87" key="NewPhpClassDialog" timestamp="1616713403088">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -320,17 +300,17 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1366.728@0.0.1366.728" timestamp="1615394006675" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1614615929759">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1616980311445">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1614615929759" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1616980311445" />
     <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614606629474">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1614606629474" />
-    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1616709483017">
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1616971357670">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1616709483017" />
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1616971357670" />
   </component>
 </project>
