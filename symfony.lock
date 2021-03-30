@@ -79,10 +79,13 @@
         "version": "1.1.1"
     },
     "dompdf/dompdf": {
-        "version": "v1.0.2"
+        "version": "v0.8.6"
     },
     "egulias/email-validator": {
         "version": "2.1.25"
+    },
+    "flosch/stripe-bundle": {
+        "version": "2.1.0"
     },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
@@ -146,6 +149,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "stripe/stripe-php": {
+        "version": "v7.76.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.5"
@@ -535,6 +541,12 @@
     },
     "symfony/yaml": {
         "version": "v4.4.19"
+    },
+    "tecnickcom/tc-lib-barcode": {
+        "version": "1.15.4"
+    },
+    "tecnickcom/tc-lib-color": {
+        "version": "1.14.6"
     },
     "twig/extra-bundle": {
         "version": "v3.3.0"

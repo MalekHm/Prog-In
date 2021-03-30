@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use App\Repository\EventRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,13 @@ use App\Form\ContactType;
 class ReservationEventController extends AbstractController
 {
     /**
-     * @Route("/reservation/event", name="reservation_event")
+     * @Route("/reservations/event/{id}", name="reservation_event")
      */
-    public function index(ReservationRepository $repository): Response
+    public function index(EventRepository $repository,$id): Response
     {
         return $this->render('reservation_event/index.html.twig', [
-            'reservation' => $repository->findAll()
+            'reservation' => $repository->find($id)->getReservations(),
+            'event'=>$repository->find($id)
         ]);
     }
 

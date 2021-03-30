@@ -24,7 +24,7 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="back_users")
      */
-    public function users(): Response
+    public function publicitys(): Response
     {
         return $this->render('back_template/user/index.html.twig', [
             'controller_name' => 'UserController',

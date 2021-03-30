@@ -7,9 +7,11 @@ use App\Entity\Event;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class EventType extends AbstractType
 {
@@ -18,13 +20,30 @@ class EventType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
-            ->add('start_date')
-            ->add('end_date')
+            ->add('start_date', DateType::class, [
+                'attr' => [
+                    'class' => 'form-control datepicker',
+                    'placeholder'=>'dd/mm/yyyy'
+
+                ],
+                'widget' => 'single_text',
+                'required' => true
+            ])
+            ->add('end_date', DateType::class, [
+                'attr' => [
+                    'class' => 'form-control datepicker',
+                    'placeholder'=>'dd/mm/yyyy'
+
+                ],
+                'widget' => 'single_text',
+                'required' => true
+            ])
             ->add('nb_persons')
             ->add('price_event')
-            ->add('imagefilename',FileType::class,[
+            ->add('files',FileType::class,[
                 'mapped' => false,
                 'required' => false,
+                'multiple'=>true,
 
                 ])
             ->add('category',EntityType::class,[

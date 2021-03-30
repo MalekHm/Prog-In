@@ -1,0 +1,60 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block content %}
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">{{ title }}</div>
+            <hr>
+            {{ form_start(form) }}
+
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="input-1">Event</label>
+                        {{ form_widget(form.event) }}
+                    </div>
+                    <div class="col">
+                        <label for="input-1">Product</label>
+                        {{ form_widget(form.product) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-2">Description</label>
+                    {{ form_widget(form.descriptionpromotion) }}
+                </div>
+                <div class="form-group">
+                    <label for="input-3">Start Date  </label>
+                    {{ form_widget(form.startDatePromotion, { attr:{ class:'js-datepicker' } }) }}
+                    <div class="text-danger">
+                        {{ form_errors(form.startDatePromotion) }}
+                    </div>
+                </div>
+
+            <div class="form-group">
+                <label for="input-4">End Date  </label>
+                {{ form_widget(form.endDatePromotion, { attr:{ class:'js-datepicker' } }) }}
+                <div class="text-danger">
+                    {{ form_errors(form.endDatePromotion) }}
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="input-4">Percentage</label>
+                {{ form_widget(form.pourcentage) }}
+            </div>
+
+                <center>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success px-5 w-25"><i class="icon-lock"></i> Save</button>
+                    </div>
+                </center>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

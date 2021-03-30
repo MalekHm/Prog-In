@@ -3,10 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
@@ -21,37 +19,35 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
-     *@Assert\NotBlank(message="titre is required")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="string", length=500)
-     * @Assert\NotBlank(message="desc is required")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="date is required")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $start_date;
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="end date is required")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="nb is required")
      */
     private $nb_persons;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $place_disponible;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="price is required")
      */
     private $price_event;
 
@@ -66,215 +62,255 @@ class Event
      */
     private $images;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $image;
+
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $nbViews;
 
+
     /**
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="event")
      */
     private $reservations;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Promotion", mappedBy="event")
+     */
+    private $promotion;
 
-
-
-
-
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-        $this->reservations = new ArrayCollection();
-    }
-
-
-
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitre()
     {
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
+    /**
+     * @param mixed $titre
+     */
+    public function setTitre($titre): void
     {
         $this->titre = $titre;
-
-        return $this;
     }
 
-    public function getDescription(): ?string
+    /**
+     * @return mixed
+     */
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
     {
         $this->description = $description;
-
-        return $this;
     }
 
-    public function getStartDate(): ?string
+    /**
+     * @return mixed
+     */
+    public function getStartDate()
     {
         return $this->start_date;
     }
 
-    public function setStartDate(string $start_date): self
+    /**
+     * @param mixed $start_date
+     */
+    public function setStartDate($start_date): void
     {
         $this->start_date = $start_date;
-
-        return $this;
     }
 
-    public function getEndDate(): ?string
+    /**
+     * @return mixed
+     */
+    public function getEndDate()
     {
         return $this->end_date;
     }
 
-    public function setEndDate(string $end_date): self
+    /**
+     * @param mixed $end_date
+     */
+    public function setEndDate($end_date): void
     {
         $this->end_date = $end_date;
-
-        return $this;
     }
 
-    public function getNbPersons(): ?int
+
+
+    /**
+     * @return mixed
+     */
+    public function getNbPersons()
     {
         return $this->nb_persons;
     }
 
-    public function setNbPersons(int $nb_persons): self
+    /**
+     * @param mixed $nb_persons
+     */
+    public function setNbPersons($nb_persons): void
     {
         $this->nb_persons = $nb_persons;
-
-        return $this;
     }
 
-    public function getPriceEvent(): ?float
+    /**
+     * @return mixed
+     */
+    public function getPriceEvent()
     {
         return $this->price_event;
     }
 
-    public function setPriceEvent(float $price_event): self
+    /**
+     * @param mixed $price_event
+     */
+    public function setPriceEvent($price_event): void
     {
         $this->price_event = $price_event;
-
-        return $this;
     }
 
-    public function getCategory(): ?Category
+    /**
+     * @return mixed
+     */
+    public function getCategory()
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
     {
         $this->category = $category;
-
-        return $this;
     }
+
+
+
+
 
     /**
-     * @return Collection|Image[]
+     * @return mixed
      */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getEvent() === $this) {
-                $image->setEvent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getNbViews(): ?int
+    public function getNbViews()
     {
         return $this->nbViews;
     }
 
-    public function setNbViews(?int $nbViews): self
+    /**
+     * @param mixed $nbViews
+     */
+    public function setNbViews($nbViews): void
     {
         $this->nbViews = $nbViews;
-
-        return $this;
     }
 
     /**
-     * @return Collection|Reservation[]
+     * @return mixed
      */
-    public function getReservations(): Collection
+    public function getReservations()
     {
         return $this->reservations;
     }
 
-    public function addReservation(Reservation $reservation): self
+    /**
+     * @param mixed $reservations
+     */
+    public function setReservations($reservations): void
     {
-        if (!$this->reservations->contains($reservation)) {
-            $this->reservations[] = $reservation;
-            $reservation->setEvent($this);
-        }
-
-        return $this;
+        $this->reservations = $reservations;
     }
 
-    public function removeReservation(Reservation $reservation): self
+    /**
+     * @return mixed
+     */
+    public function getPromotion()
     {
-        if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getEvent() === $this) {
-                $reservation->setEvent(null);
-            }
-        }
-
-        return $this;
+        return $this->promotion;
     }
+
+    /**
+     * @param mixed $promotion
+     */
+    public function setPromotion($promotion): void
+    {
+        $this->promotion = $promotion;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param mixed $images
+     */
+    public function setImages($images): void
+    {
+        $this->images = $images;
+    }
+
+
+
 
     public function __toString()
     {
-        // TODO: Implement __toString() method.
-        return (string)$this->getId();
+        return $this->titre;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPlaceDisponible()
+    {
+        return $this->place_disponible;
+    }
 
+    /**
+     * @param mixed $place_disponible
+     */
+    public function setPlaceDisponible($place_disponible): void
+    {
+        $this->place_disponible = $place_disponible;
+    }
 
-
-
+    public function getPromo(){
+        $reduction=0;
+        foreach ($this->getPromotion() as $promotion){
+            if($promotion->getStartDatePromotion()<=new \DateTime() && $promotion->getEndDatePromotion()>=new \DateTime()){
+                $reduction=($this->getPriceEvent()*$promotion->getPourcentage())/100;
+            }
+        }
+        if($reduction!=0){
+            return "Réservez maintenant et gagnez ".$reduction." DT sur chaque ticket";
+        }
+    }
 
 }

@@ -26,16 +26,16 @@ class Reservation
      * @ORM\Column(type="boolean",nullable=true)
      */
     private $Status;
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $paid;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $nom;
+    private $reservationDate;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $prenom;
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="reservations")
@@ -46,6 +46,21 @@ class Reservation
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $resteapayer;
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $reduction;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
+
 
     public function getId(): ?int
     {
@@ -64,6 +79,7 @@ class Reservation
         return $this;
     }
 
+
     public function getStatus(): ?bool
     {
         return $this->Status;
@@ -76,29 +92,8 @@ class Reservation
         return $this;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
 
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
 
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
 
     public function getEvent(): ?Event
     {
@@ -123,4 +118,86 @@ class Reservation
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getReservationDate()
+    {
+        return $this->reservationDate;
+    }
+
+    /**
+     * @param mixed $reservationDate
+     */
+    public function setReservationDate($reservationDate): void
+    {
+        $this->reservationDate = $reservationDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResteapayer()
+    {
+        return $this->resteapayer;
+    }
+
+    /**
+     * @param mixed $resteapayer
+     */
+    public function setResteapayer($resteapayer): void
+    {
+        $this->resteapayer = $resteapayer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReduction()
+    {
+        return $this->reduction;
+    }
+
+    /**
+     * @param mixed $reduction
+     */
+    public function setReduction($reduction): void
+    {
+        $this->reduction = $reduction;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaid()
+    {
+        return $this->paid;
+    }
+
+    /**
+     * @param mixed $paid
+     */
+    public function setPaid($paid): void
+    {
+        $this->paid = $paid;
+    }
+
+
 }

@@ -48,17 +48,22 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function listOrderBydate()
-    {
-        return $this->createQueryBuilder('s')
-            ->orderBy('s.start_date','ASC')
-            ->getQuery()->getResult();
-    }
+
 
     public function listOrderByPrice()
     {
         return $this->createQueryBuilder('s')
+            ->where('s.start_date >= ?1')
+            ->setParameter(1, new \DateTime())
             ->orderBy('s.price_event','ASC')
+            ->getQuery()->getResult();
+    }
+    public function listOrderBystartDate()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.start_date >= ?1')
+            ->setParameter(1, new \DateTime())
+            ->orderBy('s.start_date','ASC')
             ->getQuery()->getResult();
     }
 
@@ -66,29 +71,33 @@ class EventRepository extends ServiceEntityRepository
      *
      */
 
-    public function findSearch(SearchData $search)
+    public function findSearch($title)
     {
-        $query = $this
-            ->createQueryBuilder('p')
-            ->select('c' , 'p')
-            ->join('p.Category', 'c');
-
-        if (!empty($search-> q))
-        {
-            $query = $query
-                ->andWhere('p.title LIKE :q')
-                ->setParameter('q',$search->q);
-        }
-
-        if (!empty($search-> categories))
-        {
-            $query = $query
-                ->andWhere('c.id IN (:categories)')
-                ->setParameter('categories', $search->categories);
-        }
-
+        return $this->createQueryBuilder('s')
+            ->where('s.titre Like ?1 or s.description Like ?1')
+            ->setParameter(1, '%'.$title."%")
+            ->andWhere('s.start_date >= ?2')
+            ->setParameter(2, new \DateTime())
+            ->orderBy('s.start_date','ASC')
+            ->getQuery()->getResult();
 
     }
+    public function findEvents()
+    {
+        return $this->createQueryBuilder('a');
+    }
+
+    public function findByDate(){
+
+        return $this->createQueryBuilder('p')
+            ->where('p.start_date >= ?1')
+            ->setParameter(1, new \DateTime())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 
 
 }

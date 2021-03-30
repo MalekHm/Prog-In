@@ -8,51 +8,50 @@
         <div class="col-lg-10">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" align="center">LISTE DES RESERVATIONS</h5>
+                    <h5 class="card-title" align="center">LISTE DES RESERVATIONS POUR L'EVENEMENT : {{ event }}</h5>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                             <tr>
+                                <th></th>
+                                <th>Nom </th>
+                                <th>Prenom</th>
+                                <th>Email</th>
+                                <th scope="col">Nombre des tickets</th>
+                                <th>Status</th>
+                                <th>Date de réservation</th>
+                                <th>Montant</th>
 
-                                <th scope="col">Nom </th>
-                                <th scope="col">Prénom</th>
-                                <th scope="col">Nombre de réservations</th>
-                                <th scope="col">ID event</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
 
                             </tr>
                             </thead>
                             <tbody>
                             {% for e in reservation %}
                                 <tr>
+                                    <td>
+                                            <img src="/user/{{ e.user.pictureUser }}"
+                                                 class="picture-src rounded-circle " width="50px" id="wizardPicturePreview" title=""/>
 
-                                    <td>{{ e.nom }}</td>
-                                    <td>{{ e.prenom }}</td>
+
+                                    </td>
+                                    <td>{{ e.user.firstName }}</td>
+                                    <td>{{ e.user.lastName }}</td>
+                                    <td>{{ e.user.email }}</td>
                                     <td>{{ e.nbParticipants }}</td>
-                                    <td>{{ e.event }}</td>
 
-                                    {% if e.getStatus==0 %}
+                                    <td>
+                                        {% if e.status ==true %}
+                                            Reservé
+                                        {% else %}
+                                            Annuler
+                                        {% endif%}
+                                    </td>
+                                    <td>{{ e.reservationDate|date('d-m-Y') }}</td>
+                                    <td>              {{ e.resteapayer}} - {{ e.reduction}} ={{ e.resteapayer-e.reduction }} DT
+                                    </td>
 
-                                    <td>Refusée</td>
 
-                                        {% elseif e.getStatus ==1  %}
-                                            <td>Approuvée</td>
-                                        {%  elseif e.getStatus == ""  %}
-                                            <td>En Attente</td>
-                                        {% endif %}
-                                    <td> <!-- Call to action buttons -->
-                                        <ul class="list-inline m-0">
-                                            <li class="list-inline-item">
-                                                <a href="{{ path('reservation_edit',{id:e.id}) }}"> <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="update"><i class="fa fa-edit"></i></button></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="{{ path('contact',{id:e.id}) }}"> <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="confirmé mail"><i class="fa fa-envelope"></i></button></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="{{ path('reservation_delete',{id:e.id}) }}"> <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button></a>
-                                            </li>
-                                        </ul></td>
+
                                 </tr>
                             {% endfor %}
 

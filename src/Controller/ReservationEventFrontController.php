@@ -6,6 +6,9 @@ use App\Entity\Event;
 use App\Entity\Reservation;
 use App\Form\ReservationFrontType;
 use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
+use Com\Tecnick\Barcode\Barcode;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,87 +22,68 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ReservationEventFrontController extends AbstractController
 {
     /**
-     * @Route("/reservation/event/front", name="reservation_event_front")
+     * @Route("/reservations/", name="reservation_event_front")
      */
     public function index(): Response
     {
         return $this->render('reservation_event_front/index.html.twig', [
             'controller_name' => 'ReservationEventFrontController',
+            'reservations'=>$this->getUser()->getReservations()
 
         ]);
     }
 
+
+
     /**
-     * @Route("/reservation/facture", name="reservation_facture")
+     * @Route("/reservations/delete/{id}", name="client_reservation_delete")
      */
-    public function showfacture(): Response
+    public function deleteReservation($id,ReservationRepository $repository): Response
     {
 
 
-        return $this->render('reservation_event_front/factureEvent.html.twig', [
 
-            'controller_name' => 'ReservationEventFrontController',
+        $reservation = $repository->find($id);
+        $interval = $reservation->getEvent()->getStartDate()->diff(new \DateTime());
+        $interval= $interval->format('%a');
+        if($interval<=1){
+            $this->addFlash('danger', 'Vous pouvez plus annuler cette réservation , il reste moins que 1 jour');
+            return $this->redirectToRoute('reservation_event_front');
 
-        ]);
-    }
-    /**
-     * @Route("/reservation/add/{id}", name="create_reservationFront")
-     */
-    public function createResevationFront(Request $request, Event $events)
-    {
-        // you can fetch the EntityManager via $this->getDoctrine()
-        // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
-        $reservation = new Reservation();
-        $form = $this->createForm(ReservationFrontType::class,$reservation);
-
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($reservation);
-            $manager->flush();
-            return $this->redirectToRoute('reservation_facture');
         }
-        return $this->render('evennement_front/consulterEvent.html.twig',[
-            'events' => $events,
+        $em = $this->getDoctrine()->getManager();
 
-            'form'=>$form->createView()
+        if($reservation->getEvent()->getStartDate()>new \DateTime(-1))
+        $reservation->setStatus(false);
+        $reservation->getEvent()->setPlaceDisponible($reservation->getEvent()->getPlaceDisponible()+$reservation->getNbParticipants());
+        $em->flush();
+        $this->addFlash('danger', 'Réservation annuler avec succés');
 
-        ]);
+        return $this->redirectToRoute('reservation_event_front');
     }
 
     /**
-     * @route ("formulaire/pdf", name="PDF")
+     * @route ("/reservations/ticket/{id}", name="PDF")
      */
-    function generePDF()
+    function generePDF($id,ReservationRepository $repository)
     {
-        // Configure Dompdf according to your needs
-
+        $barcode = new Barcode();
+        $bobj = $barcode->getBarcodeObj('QRCODE,H', 'http://localhost:8001/reservations/ticket/'.$id, -4, -4, 'black', array(-2, -2, -2, -2))->setBackgroundColor('#f0f0f0');
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
-
-
-        //$form = $repository->find($ref);
-        // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
-
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('pdf/pdfFacture.html.twig', [
-            //'form' => $form
+        $html = $this->renderView('ticket/index.html.twig', [
+            'codeqr'=>"data:image/png;base64,".base64_encode($bobj->getPngData()),
+            'reservation'=>$reservation = $repository->findOneBy(["token"=>$id])
         ]);
-        //$html .= '';
-        // Load HTML to Dompdf
+
         $dompdf->loadHtml($html);
 
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'landscape');
-
-        // Render the HTML as PDF
+        $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        // Output the generated PDF to Browser (force download)
-        $dompdf->stream("facture.pdf", [
-            "Attachment" => true
+        $dompdf->stream("contract.pdf", [
+            "Attachment" => false
         ]);
     }
     /**
@@ -124,20 +108,20 @@ class ReservationEventFrontController extends AbstractController
     }
 
     /**
-     * @Route("/create-checkout-session", name="checkout")
+     * @Route("/create-checkout-session/{ammount}", name="checkout")
      */
-    public function checkout(): Response
+    public function checkout($ammount): Response
     {
-        \Stripe\Stripe::setApiKey('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+        Stripe::setApiKey('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'usd',
+                    'currency' => 'USD',
                     'product_data' => [
-                        'name' => 'T-shirt',
+                        'name' => 'Payment de réservation',
                     ],
-                    'unit_amount' => 2000,
+                    'unit_amount' => $ammount*100,
                 ],
                 'quantity' => 1,
             ]],

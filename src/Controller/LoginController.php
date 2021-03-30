@@ -69,9 +69,8 @@ class LoginController extends AbstractController
                 return $this->redirectToRoute('forget_password');
             }
             $token = $tokenGenerator->generateToken();
-
             try {
-                $user->setResetToken($token);//????
+                $user->setResetToken($token);
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', 'Please try again');

@@ -16,8 +16,6 @@ class ReservationFrontType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
             ->add('nbParticipants')
             ->add('event',EntityType::class,[
                 'label'=>false,
@@ -29,9 +27,6 @@ class ReservationFrontType extends AbstractType
 
             ])
 
-        ;
-
-           //->add('Status')
         ;
     }
 

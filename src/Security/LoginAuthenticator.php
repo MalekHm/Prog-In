@@ -105,4 +105,17 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     }
 
 
+    public function verifier($var){
+        if($var===null||$var===""){
+            return true;
+        }
+        return false;
+    }
+    function endsWith( $haystack, $needle ) {
+        $length = strlen( $needle );
+        if( !$length ) {
+            return true;
+        }
+        return substr( $haystack, -$length ) === $needle;
+    }
 }

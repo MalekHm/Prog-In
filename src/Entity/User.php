@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -69,6 +71,11 @@ class User  implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resetToken;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="user")
+     */
+    private $reservations;
 
 
 
@@ -241,6 +248,22 @@ class User  implements UserInterface
     public function getRoles()
     {
         return [$this->role];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
+    }
+
+    /**
+     * @param mixed $reservations
+     */
+    public function setReservations($reservations): void
+    {
+        $this->reservations = $reservations;
     }
 
 
