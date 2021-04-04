@@ -72,14 +72,155 @@ class User  implements UserInterface
      */
     private $resetToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="user")
+     */
+    private $reservations;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
+     */
+    private $orders;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity=CommentArticle::class, mappedBy="user")
+     */
+    private $commentArticles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Blog::class, mappedBy="Likes")
+     */
+    private $Likes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Blog::class, mappedBy="Dislike")
+     */
+    private $Dislikes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Blog::class, mappedBy="Favoris")
+     */
+    private $blogs;
 
     public function __construct()
     {
+        $this->commentArticles = new ArrayCollection();
+        $this->Likes = new ArrayCollection();
+        $this->Dislikes = new ArrayCollection();
+        $this->blogs = new ArrayCollection();
     }
+
+    /**
+     * @return Collection|CommentArticle[]
+     */
+    public function getCommentArticles(): Collection
+    {
+        return $this->commentArticles;
+    }
+
+    public function addCommentArticle(CommentArticle $commentArticle): self
+    {
+        if (!$this->commentArticles->contains($commentArticle)) {
+            $this->commentArticles[] = $commentArticle;
+            $commentArticle->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentArticle(CommentArticle $commentArticle): self
+    {
+        if ($this->commentArticles->removeElement($commentArticle)) {
+            // set the owning side to null (unless already changed)
+            if ($commentArticle->getUser() === $this) {
+                $commentArticle->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->Likes;
+    }
+
+    public function addLike(Blog $like): self
+    {
+        if (!$this->Likes->contains($like)) {
+            $this->Likes[] = $like;
+            $like->addLike($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Blog $like): self
+    {
+        if ($this->Likes->removeElement($like)) {
+            $like->removeLike($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getDislikes(): Collection
+    {
+        return $this->Dislikes;
+    }
+
+    public function addDislike(Blog $dislike): self
+    {
+        if (!$this->Dislikes->contains($dislike)) {
+            $this->Dislikes[] = $dislike;
+            $dislike->addDislike($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDislike(Blog $dislike): self
+    {
+        if ($this->Dislikes->removeElement($dislike)) {
+            $dislike->removeDislike($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->addFavori($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->removeElement($blog)) {
+            $blog->removeFavori($this);
+        }
+
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -243,6 +384,38 @@ class User  implements UserInterface
     public function getRoles()
     {
         return [$this->role];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
+    }
+
+    /**
+     * @param mixed $reservations
+     */
+    public function setReservations($reservations): void
+    {
+        $this->reservations = $reservations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * @param mixed $orders
+     */
+    public function setOrders($orders): void
+    {
+        $this->orders = $orders;
     }
 
 

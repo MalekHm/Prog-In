@@ -1,0 +1,56 @@
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<center>
+    <div class="container">
+        <h1>Facture</h1>
+        <p>Le {{ auj|date('d-m-Y') }}</p>
+        <p>Date de la commande : {{ order.orderDate|date('d-m-Y')}} </p>
+        <h4>Client : {{ order.user.firstName }} {{ order.user.lastName }}</h4>
+        <table width="100%">
+            <tr>
+                <th>Id</th>
+                <th>Produit</th>
+                <th>Quantite</th>
+                <th>Achat/Location</th>
+                <th>Prix Unitaire</th>
+                <th>Total</th>
+            </tr>
+
+            {% for proord in order.prodectOrders %}
+                <tr>
+                    <td>{{ proord.id }}</td>
+                    <td>{{ proord.product.name }}</td>
+                    <td>{{ proord.quantity }}</td>
+                    <td>
+                        {% if proord.type %}
+                            Achat
+                        {% else %}
+                            Location
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if proord.type %}
+                            {{ proord.product.price }}
+                        {% else %}
+                            {{ proord.product.pricer }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if proord.type %}
+                            {{ proord.product.price*proord.quantity }}
+                        {% else %}
+                            {{ proord.product.pricer*proord.quantity }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+        <br>
+        <div style="margin-right: 0px">Montant à payer {{ order.total }} DT</div>
+    </div>
+</center>

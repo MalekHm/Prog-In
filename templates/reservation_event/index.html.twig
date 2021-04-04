@@ -1,0 +1,78 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Hello reservation controller!{% endblock %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" align="center">LISTE DES RESERVATIONS POUR L'EVENEMENT : {{ event }}</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nom </th>
+                                <th>Prenom</th>
+                                <th>Email</th>
+                                <th scope="col">Nombre des tickets</th>
+                                <th>Status</th>
+                                <th>Date de réservation</th>
+                                <th>Montant</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for e in reservation %}
+                                <tr>
+                                    <td>
+                                            <img src="/user/{{ e.user.pictureUser }}"
+                                                 class="picture-src rounded-circle " width="50px" id="wizardPicturePreview" title=""/>
+
+
+                                    </td>
+                                    <td>{{ e.user.firstName }}</td>
+                                    <td>{{ e.user.lastName }}</td>
+                                    <td>{{ e.user.email }}</td>
+                                    <td>{{ e.nbParticipants }}</td>
+
+                                    <td>
+                                        {% if e.status ==true %}
+                                            Reservé
+                                        {% else %}
+                                            Annuler
+                                        {% endif%}
+                                    </td>
+                                    <td>{{ e.reservationDate|date('d-m-Y') }}</td>
+                                    <td>              {{ e.resteapayer}} - {{ e.reduction}} ={{ e.resteapayer-e.reduction }} DT
+                                    </td>
+
+
+
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+    </div><!--End Row-->
+
+    <div class="row mt-3">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <a href="{{ path('evennement') }}"><button type="submit"  class="btn btn-light btn-round px-5">Afficher les evennements</button></a>
+        </div>
+        <div class="col-lg-4"></div>
+    </div><!--End Row-->
+    <!--start overlay-->
+    <div class="overlay toggle-menu"></div>
+    <!--end overlay-->
+{% endblock %}

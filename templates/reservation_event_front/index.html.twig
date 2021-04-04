@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <style>
+        .alert {
+            padding: 10px;
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Vos réservations</div>
+        </div>
+    </div>
+
+
+
+    <!-- CTA -->
+
+    <div class="cta">
+        <!-- Image by https://unsplash.com/@thanni -->
+        <div class="cta_background" style="background: linear-gradient(to right, #fa9e1b, #8d4fff, #fa9e1b);color: white;">
+          <div class="container">
+              {% for message in app.flashes('danger') %}
+                  <div class="alert alert-danger">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+            <div class="row">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom de l'événement</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Nombre de personnes</th>
+                        <th scope="col">Date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.event }}</td>
+                            <td>
+                                {% if reservation.status ==true %}
+                                Reservé
+                                {% else %}
+                                Annuler
+                                {% endif%}
+                            </td>
+                            <td>{{ reservation.nbParticipants }}</td>
+                            <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+                            <td>
+                                {% if reservation.status ==true %}
+                                    <a class="btn btn-danger" href="{{ path('client_reservation_delete', {'id': reservation.id}) }}"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-success" href="{{ path('PDF', {'id': reservation.token}) }}"><i class="fa fa-ticket"></i></a>
+                                    {% if reservation.paid==true %}
+                                        Payé
+                                        {% else %}
+                                            <button class="btn btn-primary" onclick="checkOut({{ reservation.resteapayer  - reservation.reduction }})">Payer Mainteant</button>
+
+                                    {% endif %}
+
+                                {% endif%}
+
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
+        // Create an instance of the Stripe object with your publishable API key
+        var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'
+        );
+        var checkoutButton = document.getElementById('checkout-button');
+
+        function checkOut(ammount){
+            // Create a new Checkout Session using the server-side endpoint you
+            // created in step 3.
+            fetch('/create-checkout-session/'+ammount, {
+                method: 'POST',
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(session) {
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+                })
+                .then(function(result) {
+                    // If `redirectToCheckout` fails due to a browser or network
+                    // error, you should display the localized error message to your
+                    // customer using `error.message`.
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+{% endblock %}

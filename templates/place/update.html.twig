@@ -1,0 +1,113 @@
+{% extends 'baseBack.html.twig' %}
+
+
+{% block content %}
+
+    <div class="row mt-3">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title"><center>MODIFIER UNE RECOMMANDATION</center></div>
+                    <hr>
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="input-6">Titre</label>
+
+                        {{form_widget(form.titlePlace, {'id':'input-titre','attr': {'class': 'form-control form-control-rounded','placeholder':'Titre'}}) }}
+                    </div>
+                        </div>
+                        <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="input-8">Catégorie</label>
+
+                        {{form_widget(form.category, {'id':'input-categorie','attr': {'class': 'form-control form-control-rounded','placeholder':''}}) }}
+
+                    </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="input-7">Description</label>
+
+                        {{form_widget(form.DescriptionPlace, {'id':'input-description','attr': {'class': 'form-control form-control-rounded','placeholder':'Description'}}) }}
+                    </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-9">Image</label>
+                        <div class="row">
+
+
+                        {% if app.request.attributes.get('_route')=='place_update' %}
+                            {% for image in place.media %}
+                            <div class="col-md-4">
+                                <div>
+                                    <img src="{{ asset('/uploads/images/'~ image.imagePlace) }}" alt="Image" width="150">
+                                    <a href="{{ path( 'place_delete_image',{'id':image.id} ) }}"
+                                       data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">
+                                        <button class="btn btn-danger btn-sm rounded-0"   data-placement="top" ><i class="fa fa-trash"></i></button>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        </div>
+                        {{form_widget(form.media, {'id':'input-localisation','attr': {'class': 'form-control form-control-rounded','placeholder':'Saisir une adresse'}}) }}
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="input-10">Adresse</label>
+
+                        {{form_widget(form.location, {'id':'input-localisation','attr': {'class': 'form-control form-control-rounded','placeholder':'Saisir une adresse'}}) }}
+                    </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="input-10">Affichage </label>
+
+                                {{form_widget(form.showPlace, {'id':'input-localisation','attr': {'class': 'form-control form-control-rounded','placeholder':'Saisir une adresse'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-info btn-round px-5"> Retourner </button>
+                          </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-round px-5"> Enregistrer</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <button type="reset" class="btn btn-secondary btn-round px-5"> Annuler</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div><!--End Row-->
+
+
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

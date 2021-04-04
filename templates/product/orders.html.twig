@@ -1,0 +1,43 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block content %}
+    <div class="card-title">Table de produits</div>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Client</th>
+            <th>Télephone</th>
+            <th>Cin</th>
+            <th>Date du commande</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.user.firstName }} {{ order.user.lastName }}</td>
+                <td>{{ order.user.phone }} </td>
+                <td>{{ order.user.identity }} </td>
+                <td>{{ order.orderDate |date('d-m-Y') }}</td>
+                <td>{{ order.Total }}</td>
+                <td><a href="{{ path('profacture', {'id': order.id}) }}">Facture</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune Commande</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+
+
+{% endblock %}

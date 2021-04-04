@@ -1,0 +1,33 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}New Category{% endblock %}
+
+{% block content %}
+
+
+
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">Nouvelle categorie</div>
+            <hr>
+
+            <div class="form-group">
+                <label for="input-6">Non de la categorie</label>
+                {{ form_widget(form.nameCategory ,{'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-light btn-round px-5"><i class="icon-lock"></i>
+                    {{ button_label|default('Enregistrer') }}</button>
+            </div>
+
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('category_index') }}">
+        <button type="button" class="btn btn-light">Retourner a la liste</button>
+    </a>
+{% endblock %}

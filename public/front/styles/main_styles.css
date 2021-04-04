@@ -422,12 +422,14 @@ section
 .main_nav_col
 {
 	height: 143px;
+	width:100% !important;
 	-webkit-transition: all 400ms ease;
 	-moz-transition: all 400ms ease;
 	-ms-transition: all 400ms ease;
 	-o-transition: all 400ms ease;
 	transition: all 400ms ease;
 }
+
 .header.scrolled .main_nav_col
 {
 	height: 100px;
@@ -479,7 +481,9 @@ section
 
 .main_nav_container
 {
-	margin-right: 221px;
+	margin-right: 10px !important;
+
+
 }
 .main_nav_item
 {

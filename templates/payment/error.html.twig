@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/single_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Produits</div>
+        </div>
+    </div>
+
+
+    <div class="container fill_height no-padding">
+
+        <div class="search_tabs_container">
+            <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+                    <img src="{{ asset('front/images/suitcase.png') }}" alt=""><span>Paiement rejetée</span></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="offers">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col text-center">
+                        <h2 class="section_title">Une erreur est survenue lors de votre paiement , Veuillez réessayer ! </h2>
+                    </div>
+                    <button class="button search_button" type="submit"><a href="/panier">Retour au panier<span></span><span></span><span></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

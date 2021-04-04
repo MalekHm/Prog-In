@@ -1,2 +1,40 @@
 {% extends 'base.html.twig' %}
 
+{% block content %}
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Home</div>
+        </div>
+    </div>
+    {% if publicitytop %}
+    <a href="{{ publicitytop.link }}">
+        <div class="card bg-dark-light1 mb-3">
+            <center>
+                <img  src="{{ asset('/publicity/') }}{{ publicitytop.picturePub }}" width="300px" alt="Card image cap">
+            </center>
+            <div class="card-body">
+                <h5 class="card-title">{{ publicitytop.titlePub }}</h5>
+                <p class="card-text">{{ publicitytop.descriptionPub }}</p>
+            </div>
+        </div>
+    </a>
+    {% endif %}
+
+
+    {% if publicitybottom %}
+        <a href="{{ publicitybottom.link }}">
+            <div class="card mb-3">
+                <center>
+                    <img  src="{{ asset('/publicity/') }}{{ publicitybottom.picturePub }}" width="300px" alt="Card image cap">
+                </center>
+                <div class="card-body">
+                    <h5 class="card-title">{{ publicitybottom.titlePub }}</h5>
+                    <p class="card-text">{{ publicitybottom.descriptionPub }}</p>
+                </div>
+            </div>
+        </a>
+    {% endif %}
+
+
+{% endblock %}

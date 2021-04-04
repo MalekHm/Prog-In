@@ -1,0 +1,130 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Evennements</div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+
+    <!-- Offers -->
+
+    <div class="offers">
+
+        <!-- Search -->
+
+
+
+
+        <!-- Offers -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 row">
+                    <div class="col-4">
+                        <form method="get">
+                            <select class=" form-control w-100" name="category" onchange='this.form.submit();'>
+                                {% for c in categories %}
+                                    <option  class="sort_btn" value="{{c.name}}" {% if c.name in  app.request.uri %}selected{% endif %}>{{c.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <noscript><input type="submit" value="Submit"></noscript>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <form action="" method="get">
+                            <input name="filter" type="text" class="form-control" placeholder="Chercher un évenement">
+                        </form>
+                    </div>
+                    <div class="col-4">
+                        <form method="get">
+                            <select class=" form-control w-100" name="tri" onchange='this.form.submit();'>
+                                    <option  class="sort_btn" value="startdate" {% if 'startdate' in  app.request.uri %}selected{% endif %}>Date Début</option>
+                                <option  class="sort_btn" value="price" {% if 'price' in  app.request.uri %}selected{% endif %}>Prix</option>
+                            </select>
+                            <noscript><input type="submit" value="Submit"></noscript>
+                        </form>
+                    </div>
+                </div>
+
+                </div>
+                <div class="col-lg-12">
+                    <!-- Offers Grid -->
+
+                    <div class="offers_grid">
+
+                        <!-- Offers Item -->
+
+
+                        <!-- Offers Item -->
+
+
+                        <!-- Offers Item -->
+
+                        <!-- Offers Item -->
+
+
+                        <!-- Offers Item -->
+
+                        {% for i in events %}
+                        <div class="offers_item rating_3">
+
+                            <div class="row">
+                                <div class="col-lg-1 temp_col"></div>
+                                <div class="col-lg-3 col-1680-4">
+                                    <div class="offers_image_container">
+                                        <!-- Image by https://unsplash.com/@itsnwa -->
+                                        <div class="offers_image_background" style="background-image:url({{ asset('/event/') }}{{ i.images[0].source }})"></div>
+                                        <div class="offer_name"><a href="#">{{ i.startDate | date('d-m-Y') }}</a></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="offers_content">
+                                        <div class="offers_price">{{ i.titre }}</div>
+                                        <div class="rating_r rating_r_3 offers_rating" data-rating="3">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="offers_text">{{ i.description }}</p>
+                                        <div class="offers_icons">
+                                            <ul class="offers_icons_list">
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/post.png') }}" alt=""></li>
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/compass.png') }}" alt=""></li>
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/bicycle.png') }}" alt=""></li>
+                                                <li class="offers_icons_item"><img src="{{ asset('front/images/sailboat.png') }}" alt=""></li>
+                                            </ul>
+                                        </div>
+                                        <div class="button book_button"><a href="{{ path('evennement_show',{'id':i.id}) }}">Consulter<span></span><span></span><span></span></a></div>
+                                        <div class="offer_reviews">
+                                            <div class="offer_reviews_content">
+                                                <div class="offer_reviews_title">{{ i.Category }}</div>
+
+                                                <div class="offer_reviews_subtitle">{{ i.nbPersons }} Personnes</div>
+                                            </div>
+                                            <div class="offer_reviews_rating text-center">{{ i.priceEvent }}DT <span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

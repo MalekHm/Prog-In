@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,42 +18,66 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry , PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
+        $this->paginator = $paginator;
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    /**
+     * @return PaginationInterface
+     */
 
-    /*
-    public function findOneBySomeField($value): ?Product
+    public function findSearch(SearchData $search) : PaginationInterface
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select('c' , 'p')
+            ->join('p.categoryProduct', 'c');
 
-    public function findProducts()
-    {
-        return $this->createQueryBuilder('a');
+        if (!empty($search-> q))
+        {
+            $query = $query
+                ->andWhere('p.name LIKE :q')
+                ->setParameter('q',$search->q);
+        }
+        if (!empty($search-> min))
+        {
+            $query = $query
+                ->andWhere('p.price >= :min')
+                ->setParameter('min', $search->min);
+        }
+        if (!empty($search-> max))
+        {
+            $query = $query
+                ->andWhere('p.price <= :max')
+                ->setParameter('max', $search->max);
+        }
+        if (!empty($search-> mini))
+        {
+            $query = $query
+                ->andWhere('p.pricer >= :mini')
+                ->setParameter('mini', $search->mini);
+        }
+        if (!empty($search-> maxi))
+        {
+            $query = $query
+                ->andWhere('p.pricer <= :maxi')
+                ->setParameter('maxi', $search->maxi);
+        }
+        if (!empty($search-> categories))
+        {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
+
+        $query = $query->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            4
+        );
+
     }
 }

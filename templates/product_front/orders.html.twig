@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <style>
+        .alert {
+            padding: 10px;
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Vos Commandes</div>
+        </div>
+    </div>
+
+
+
+    <!-- CTA -->
+
+    <div class="cta">
+        <!-- Image by https://unsplash.com/@thanni -->
+        <div class="cta_background" style="background: linear-gradient(to right, #fa9e1b, #8d4fff, #fa9e1b);color: white;">
+          <div class="container">
+              {% for message in app.flashes('danger') %}
+                  <div class="alert alert-danger">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+            <div class="row">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Client</th>
+                        <th>Télephone</th>
+                        <th>Cin</th>
+                        <th>Date du commande</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.user.firstName }} {{ order.user.lastName }}</td>
+                            <td>{{ order.user.phone }} </td>
+                            <td>{{ order.user.identity }} </td>
+                            <td>{{ order.orderDate |date('d-m-Y') }}</td>
+                            <td>{{ order.Total }}</td>
+                            <td><a class="btn btn-primary" href="{{ path('profacture', {'id': order.id}) }}">Facture </a></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Aucune Commande</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
+        // Create an instance of the Stripe object with your publishable API key
+        var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'
+        );
+        var checkoutButton = document.getElementById('checkout-button');
+
+        function checkOut(ammount){
+            // Create a new Checkout Session using the server-side endpoint you
+            // created in step 3.
+            fetch('/create-checkout-session/'+ammount, {
+                method: 'POST',
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(session) {
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+                })
+                .then(function(result) {
+                    // If `redirectToCheckout` fails due to a browser or network
+                    // error, you should display the localized error message to your
+                    // customer using `error.message`.
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+{% endblock %}

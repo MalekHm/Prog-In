@@ -1,0 +1,29 @@
+<center>
+    {{ reservation.event.titre }} ({{ reservation.event.startDate | date ('d-m-Y') }} / {{ reservation.event.endDate | date ('d-m-Y') }})
+    <br>
+    Client {{ reservation.user.email }} / {{ reservation.user.identity }}
+    <br>
+    Nombre de Tickets achetés :  {{ reservation.nbParticipants }}
+    <br>
+    Montant Total = {{  reservation.resteapayer }}
+    <br>
+    Reduction = {{ reservation.reduction }}
+    <br>
+    <strong style="text-decoration: underline">
+        Reste à Payer =
+        {% if reservation.paid %}
+            0
+        {% else %}
+            {{ reservation.resteapayer-reservation.reduction }}
+        {% endif %}
+        DT</strong>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <img style="width: 200px;height: 200px;" src="{{codeqr}}">
+    <br>
+    Date Réservation {{ reservation.reservationDate | date ('d-m-Y') }}
+</center>

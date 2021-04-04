@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,8 +49,55 @@ class EventRepository extends ServiceEntityRepository
     }
     */
 
+
+    public function listOrderByPrice()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.start_date >= ?1')
+            ->setParameter(1, new \DateTime())
+            ->orderBy('s.price_event','ASC')
+            ->getQuery()->getResult();
+    }
+    public function listOrderBystartDate()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.start_date >= ?1')
+            ->setParameter(1, new \DateTime())
+            ->orderBy('s.start_date','ASC')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     *
+     */
+
+    public function findSearch($title)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.titre Like ?1 or s.description Like ?1')
+            ->setParameter(1, '%'.$title."%")
+            ->andWhere('s.start_date >= ?2')
+            ->setParameter(2, new \DateTime())
+            ->orderBy('s.start_date','ASC')
+            ->getQuery()->getResult();
+
+    }
     public function findEvents()
     {
         return $this->createQueryBuilder('a');
     }
+
+    public function findByDate(){
+
+        return $this->createQueryBuilder('p')
+            ->where('p.start_date >= ?1')
+            ->setParameter(1, new \DateTime())
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
+
 }

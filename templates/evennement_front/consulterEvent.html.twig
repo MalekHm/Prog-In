@@ -1,0 +1,159 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+
+    <style>
+        .alert {
+            padding: 10px;
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Evennements</div>
+        </div>
+    </div>
+
+    <!-- Offers -->
+
+    <div class="offers">
+
+
+
+        <!-- Offers -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="single_listing">
+                        {% for message in app.flashes('danger') %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+
+                        <!-- Hotel Info -->
+
+                        <div class="hotel_info">
+
+                            <!-- Title -->
+                            <div class="hotel_title_container d-flex flex-lg-row flex-column">
+                                <div class="hotel_title_content">
+                                    <h1 class="hotel_title">{{ events.titre }}</h1>
+                                    <div class="rating_r rating_r_4 hotel_rating">
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                    </div>
+                                    <div class="hotel_location">{{ events.startDate |date('d-m-Y') }} {{ events.endDate|date('d-m-Y') }}</div>
+                                </div>
+                                <div class="hotel_title_button ml-lg-auto text-lg-right">
+                                    <div class="hotel_map_link_container">
+                                        <div class="hotel_map_link">{{ events.nbViews}} views</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Listing Image -->
+                            <center>
+                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {% for image in events.images %}
+                                            <div  class="carousel-item {% if image==events.images[0] %}active{% endif %}">
+                                                <img class="d-block " height="500px" src="{{ asset('/event/') }}{{ image.source }}" alt="First slide">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev" >
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #0a1219"></span>
+                                        <span class="sr-only" >Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #0a1219"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </center>
+
+
+
+
+                            <!-- Hotel Info Text -->
+
+                            <div class="hotel_info_text">
+                                <p>{{ events.description }}</p>
+                            </div>
+
+                            <!-- Hotel Info Tags -->
+
+                            <div class="hotel_info_tags">
+                                <ul class="hotel_icons_list">
+                                    <li class="hotel_icons_item"><img src="{{ asset('front/images/post.png') }}" alt=""></li>
+                                    <li class="hotel_icons_item"><img src="{{ asset('front/images/compass.png') }}" alt=""></li>
+                                    <li class="hotel_icons_item"><img src="{{ asset('front/images/bicycle.png') }}" alt=""></li>
+                                    <li class="hotel_icons_item"><img src="{{ asset('front/images/sailboat.png') }}" alt=""></li>
+
+                                    {% if app.user %}
+                                        {% if events.placeDisponible==0 %}
+                                            <li class="float-right"><button  class=" search_button">
+                                                    Complet
+                                        </button>
+                                            </li>
+
+                                        {% else%}
+                                            <li class="float-right"><button data-toggle="modal" data-target="#exampleModalCenter" class="button search_button">
+                                                    {% if events.Promo %}
+                                                        {{ events.Promo }}
+                                                    {% else %}
+                                                        Réserver maintenant
+                                                    {% endif %}
+
+                                                    <span></span><span></span><span></span></button></li>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </ul>
+
+                            </div>
+
+
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Complétez votre réservation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="get">
+
+                                            <div class="modal-body">
+                                                    Combien de tickets voulez vous ?
+                                                    <input type="number" name="nbPersonnes" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
