@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository", repositoryClass=ProductRepository::class)
  */
 class Product
 {
@@ -19,28 +22,76 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
      */
-    private $nameProduct;
+    private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
      */
-    private $descriptionProduct;
+    private $description;
+
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
+     * @Assert\Positive (
+     *      message = "Ce prix n'est pas valide."
+     * )
+     */
+    private $price;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CategoryProduct::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categoryProduct;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
+     *  @Assert\Positive (
+     *      message = "Ce prix n'est pas valide."
+     * )
      */
-    private $priceProduct;
+    private $pricer;
 
+    /**
+     * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
+     */
+    private $quantity;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
+     */
+    private $images;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Promotion", mappedBy="product")
      */
     private $promotion;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductOrder", mappedBy="product")
+     */
+    private $prodectOrders;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -48,57 +99,99 @@ class Product
         return $this->id;
     }
 
-    public function getNameProduct(): ?string
+    public function getName(): ?string
     {
-        return $this->nameProduct;
+        return $this->name;
     }
 
-    public function setNameProduct(string $nameProduct): self
+    public function setName(string $name): self
     {
-        $this->nameProduct = $nameProduct;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getDescriptionProduct(): ?string
+    public function getDescription(): ?string
     {
-        return $this->descriptionProduct;
+        return $this->description;
     }
 
-    public function setDescriptionProduct(string $descriptionProduct): self
+    public function setDescription(string $description): self
     {
-        $this->descriptionProduct = $descriptionProduct;
-
-        return $this;
-    }
-
-    public function getCategoryProduct(): ?string
-    {
-        return $this->categoryProduct;
-    }
-
-    public function setCategoryProduct(string $categoryProduct): self
-    {
-        $this->categoryProduct = $categoryProduct;
-
-        return $this;
-    }
-
-    public function getPriceProduct(): ?float
-    {
-        return $this->priceProduct;
-    }
-
-    public function setPriceProduct(float $priceProduct): self
-    {
-        $this->priceProduct = $priceProduct;
+        $this->description = $description;
 
         return $this;
     }
 
 
 
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
 
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+
+
+    public function getPricer(): ?float
+    {
+        return $this->pricer;
+    }
+
+    public function setPricer(float $pricer): self
+    {
+        $this->pricer = $pricer;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -117,7 +210,50 @@ class Product
 
     public function __toString()
     {
-        return $this->nameProduct;
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoryProduct()
+    {
+        return $this->categoryProduct;
+    }
+
+    /**
+     * @param mixed $categoryProduct
+     */
+    public function setCategoryProduct($categoryProduct): void
+    {
+        $this->categoryProduct = $categoryProduct;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProdectOrders()
+    {
+        return $this->prodectOrders;
+    }
+
+    /**
+     * @param mixed $prodectOrders
+     */
+    public function setProdectOrders($prodectOrders): void
+    {
+        $this->prodectOrders = $prodectOrders;
+    }
+
+
+    public function getPromo(){
+        $reduction=0;
+        foreach ($this->getPromotion() as $promotion){
+            if($promotion->getStartDatePromotion()<=new \DateTime() && $promotion->getEndDatePromotion()>=new \DateTime()){
+                $reduction=($promotion->getPourcentage());
+            }
+        }
+       return $reduction;
     }
 
 

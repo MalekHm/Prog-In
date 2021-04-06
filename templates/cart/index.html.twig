@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+{% block title %}  {% endblock %}
+
+{% block content %}
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/single_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Produits</div>
+        </div>
+    </div>
+
+    <!--
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+-->
+
+<div class="container fill_height no-padding">
+<div class="row fill_height no-margin">
+    <div class="col fill_height no-padding">
+        <div class="search_tabs_container">
+            <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="{{ asset('front/images/suitcase.png') }}" alt=""><span>Paiement</span></div>
+            </div>
+        </div>
+
+
+            <center>
+
+    {% if  items | length > 0%}
+        <table  class="table table-bordered table-striped table-condensed" style="width:50%" >
+            <thead>
+            <tr>
+                <th colspan="5"><center>Vos achats</center></th>
+            </tr>
+            <tr>
+                <th>Produit</th>
+                <th>Prix de vente</th>
+                <th>Quantite</th>
+                <th>Sous-Total</th>
+                <th>Ations</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items  %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td> <strong>{{ item.quantity }} </strong></td>
+                    <td>{{ item.product.price * item.quantity }}</td>
+                    <td>
+                        <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">Annuler</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot>
+            <td colspan="3" class="text-right"> <strong>Total des achats:</strong> </td>
+            <td> <strong> {{ total }} </strong></td>
+            </tfoot>
+
+        </table>
+
+        </center>
+    {% else %}
+        <table  class="table table-bordered table-striped table-condensed" style="width:50%">
+            <thead>
+            <tr>
+                <th colspan="5"><center>Vos Achats</center></th>
+            </tr>
+            <tr>
+                <th colspan="5"><center>Pas d'achat pour aujourd'hui!</center></th>
+            </tr>
+            </thead>
+        </table>
+
+    {% endif %}
+
+
+    <center>
+
+
+        {% if  itemsr | length > 0%}
+            <table  class="table table-bordered table-striped table-condensed" style="width:50%">
+                <thead>
+                <tr>
+                    <th colspan="5"><center>Vos locations</center></th>
+                </tr>
+
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix de location</th>
+                    <th>Quantite</th>
+                    <th>Sous-Total</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for itemr in itemsr  %}
+                    <tr>
+                        <td>{{ itemr.product.name }}</td>
+                        <td>{{ itemr.product.pricer }}</td>
+                        <td> <strong>{{ itemr.quantity }} </strong></td>
+                        <td>{{ itemr.product.pricer * itemr.quantity }}</td>
+                        <td>
+                            <a href="{{ path('cart_remover', {'id': itemr.product.id}) }}" class="btn btn-danger btn-sm">Annuler</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+                <td colspan="3" class="text-right"> <strong>Total des commandes:</strong> </td>
+                <td> <strong> {{ totalf }} </strong></td>
+                </tfoot>
+                <tfoot>
+                <td colspan="3" class="text-right"><strong> Total des locations:</strong> </td>
+                <td> <strong>{{ totalr }}</strong></td>
+                </tfoot>
+
+
+            </table>
+
+
+        {% else %}
+        <table  class="table table-bordered table-striped table-condensed" style="width:50%">
+            <thead>
+            <tr>
+                <th colspan="5"><center>Vos locations</center></th>
+            </tr>
+            <tr>
+                <th colspan="5"><center>Pas de location pour aujourd'hui!</center></th>
+            </tr>
+            </thead>
+        </table>
+        {% endif %}
+
+    </center>
+    </div>
+</div>
+</div>
+
+    <center>  <div class="button home_slider_button"><div class="button_bcg"></div><a href="{{ path('product_front') }}">Poursuivre mes achats </a></div>
+        <div class="button home_slider_button"><div class="button_bcg"></div><a href="{{ path('payment') }}">Passer au paiement </a></div>
+    </center>
+
+{% endblock %}
+
+
+
+
+
+

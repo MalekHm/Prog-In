@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+{% block title %}  {% endblock %}
+{% block content %}
+    <style>
+        .alert {
+            padding: 10px;
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/single_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Produits</div>
+        </div>
+    </div>
+
+
+        <div class="search">
+            <div class="search_inner">
+
+                <!-- Search Contents -->
+
+                <div class="container fill_height no-padding">
+                    <div class="row fill_height no-margin">
+                        <div class="col fill_height no-padding">
+
+                            <div class="search_panel active">
+                                <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+
+                                                {% include 'product_front/filter.html.twig' with {form: form} only %}
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Offers -->
+<br>
+    <br>
+    <div class="offers">
+        <div class="container">
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="section_title">Tous nos produits</h2>
+                </div>
+                <div class="button home_slider_button"><div class="button_bcg"></div><a href="{{ path('cart_index') }}">PANIER </a></div>
+            </div>
+
+            <div class="row offers_items">
+
+                <!-- Offers Item -->
+                {% for i in product %}
+                <div class="col-lg-6 offers_col">
+                    <div class="offers_item">
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="offers_image_container">
+                                    <!-- Image by https://unsplash.com/@kensuarez -->
+                                    {% for image in i.images %}
+                                        <div class="offers_image_background">
+                                        <img src="{{ asset('/product/' ~ image.source) }} " alt="Image" width="240">
+                                        </div>
+                                    {% endfor %}
+
+                                    <div class="offers_image_background" ></div>
+                                    <div class="offer_name"><a href="{{ path('product_reserver',{'id':i.id}) }}">{{ i.name }}</a></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="offers_content">
+                                    <div class="offers_price">{{ i.price }}<span>DT/ Vente</span></div>
+                                    <br>
+                                    <div class="offers_price">{{ i.pricer }}<span>DT/ Location</span></div>
+                                    <p>{{ i.description }}</p>
+                                    <div class="offers_icons">
+                                        <ul class="offers_icons_list">
+                                            <li class="offers_icons_item"><img src="{{ asset('front/images/post.png') }}" alt=""></li>
+                                            <li class="offers_icons_item"><img src="{{ asset('front/images/compass.png') }}" alt=""></li>
+                                            <li class="offers_icons_item"><img src="{{ asset('front/images/bicycle.png') }}" alt=""></li>
+                                            <li class="offers_icons_item"><img src="{{ asset('front/images/sailboat.png') }}" alt=""></li>
+                                        </ul>
+                                    </div>
+                                    <p class="offers_text" >Quantité : {{ i.quantity }}</p>
+                                    <div class="offers_link"><a href="{{ path('product_reserver',{'id':i.id}) }}">Réserver</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+            </div>
+        </div>
+    <div>
+        {{ knp_pagination_render(product) }}
+    </div>
+{% endblock %}

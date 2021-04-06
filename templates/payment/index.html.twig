@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/single_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Produits</div>
+        </div>
+    </div>
+<div class="listing">
+
+    <!-- Search -->
+
+    <div class="search">
+        <div class="search_inner">
+
+            <!-- Search Contents -->
+
+            <div class="container fill_height no-padding">
+                <div class="row fill_height no-margin">
+                    <div class="col fill_height no-padding">
+                        <div class="search_tabs_container">
+                            <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                                <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="{{ asset('front/images/suitcase.png') }}" alt=""><span>Paiement</span></div>
+                            </div>
+                        </div>
+                        <div class="search_panel active">
+                            <form action="#" id="search_form_2" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+
+      <div class="bg-light p-3">
+          <h2> <strong> Mode de paiement</strong> </h2>
+          <h4>Choisissez la méthode de paiement qui vous convient !</h4>
+
+          <form action="modepaiement" method="get" name="key">
+          <div>
+              <input type="radio" id="livraison" name="paiement" onchange="changeMethod(this.id)"  CHECKED>
+              <label for="livraison"> <h4> <b> <u>  Paiement a la livraison </u></b> </h4> </label>
+          </div>
+
+
+         <div class="bg-light p-3">
+             <h4> Payez votre commande cash à la livraison!</h4>
+             <h6>Important:</h6>
+             <h6>*Assurez-vous de préparer le montant exact de la commande. Les livreurs ne disposent pas toujours d'espèces pour vous rendre la monnaie. </h6>
+             <h6>*Nous acceptons uniquement le payement en Dinar Tunisien.</h6>
+             <h6>*Le paiement par carte bancaire, chèques ne sont pas acceptés.</h6>
+         </div>
+
+          <div>
+              <input type="radio" id="enligne" name="paiement" onchange="changeMethod(this.id)" >
+              <label for="enligne"> <h4> <b> <u>  Paiement en ligne </u></b> </h4> </label>
+          </div>
+
+        <div class="bg-light p-3">
+            <h4> Payez votre commande en ligne!</h4>
+            <h6>Important:</h6>
+            <h6>*Votre sécurité, notre priorité. Vous gardez le contrôle de chaque transaction et vous êtes protégés contre la fraude bancaire. </h6>
+            <h6>*Une procédure de remboursement plus rapide. La transaction s'effectue systématiquement sur votre carte de paiement.Politique de retour et remboursement s'applique.</h6>
+            <h6>*Avant de procéder, veuillez vous assurer que vous disposez de suffisamment de solde dans le compte de votre carte.</h6>
+        </div>
+
+              <table  class="table table-bordered table-striped table-condensed" style="width:50%">
+                  <thead>
+                  <tr>
+                      <td> Sous-total: </td>
+                      <td> {{ totalf }} DT </td>
+                  </tr>
+                  <tr>
+                      <td> frais de livraison: </td>
+                      <td> {{ fraislivraison }} DT</td>
+                  </tr>
+                  <tr>
+                      <td> <strong> TOTAL: </strong> </td>
+                      <td> <strong> {{ totalfinal }} DT </strong> </td>
+                  </tr>
+                  </thead>
+              </table>
+    </div>
+
+                                <button id="livraison-button" class="button search_button" type="submit"><a href="/payment/successlivraison">Payer a la livraison<span></span><span></span><span></span></button>
+                                <button style="display: none" id="checkout-button" class="button search_button">Payer en ligne<span></span><span></span><span></span> </button>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
+        function changeMethod(id){
+            var livraison=document.getElementById('livraison-button');
+            var enligne=document.getElementById('checkout-button');
+            if(id=='livraison'){
+                enligne.style.display = "none";
+                livraison.style.display = "block";
+            }
+            else{
+                enligne.style.display = "block";
+                livraison.style.display = "none";
+            }
+        }
+        // Create an instance of the Stripe object with your publishable API key
+        var stripe = Stripe('pk_test_51IYAqkFZNE9gSdmYthjXiqNIFWR1IcniXYtbHNzbUi2eToJjE3CSxkpglgiirfBqvsisqZ7eUbcSU14bZWEY2Dl800ICFFSC6n');
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function() {
+            // Create a new Checkout Session using the server-side endpoint you
+            // created in step 3.
+
+            fetch('/payment/create-checkout-session', {
+                method: 'POST',
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(session) {
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+                })
+                .then(function(result) {
+                    // If `redirectToCheckout` fails due to a browser or network
+                    // error, you should display the localized error message to your
+                    // customer using `error.message`.
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+{% endblock %}

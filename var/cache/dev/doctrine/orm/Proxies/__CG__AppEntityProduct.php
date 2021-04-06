@@ -66,10 +66,10 @@ class Product extends \App\Entity\Product implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'nameProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'descriptionProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'categoryProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'priceProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'promotion'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'description', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'price', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'categoryProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'pricer', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'quantity', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'images', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'promotion', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'prodectOrders'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'nameProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'descriptionProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'categoryProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'priceProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'promotion'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'description', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'price', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'categoryProduct', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'pricer', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'quantity', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'images', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'promotion', '' . "\0" . 'App\\Entity\\Product' . "\0" . 'prodectOrders'];
     }
 
     /**
@@ -194,89 +194,144 @@ class Product extends \App\Entity\Product implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getNameProduct(): ?string
+    public function getName(): ?string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNameProduct', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
-        return parent::getNameProduct();
+        return parent::getName();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setNameProduct(string $nameProduct): \App\Entity\Product
+    public function setName(string $name): \App\Entity\Product
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNameProduct', [$nameProduct]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
-        return parent::setNameProduct($nameProduct);
+        return parent::setName($name);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDescriptionProduct(): ?string
+    public function getDescription(): ?string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescriptionProduct', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
 
-        return parent::getDescriptionProduct();
+        return parent::getDescription();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setDescriptionProduct(string $descriptionProduct): \App\Entity\Product
+    public function setDescription(string $description): \App\Entity\Product
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescriptionProduct', [$descriptionProduct]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescription', [$description]);
 
-        return parent::setDescriptionProduct($descriptionProduct);
+        return parent::setDescription($description);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getCategoryProduct(): ?string
+    public function getPrice(): ?float
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoryProduct', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrice', []);
 
-        return parent::getCategoryProduct();
+        return parent::getPrice();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setCategoryProduct(string $categoryProduct): \App\Entity\Product
+    public function setPrice(float $price): \App\Entity\Product
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCategoryProduct', [$categoryProduct]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPrice', [$price]);
 
-        return parent::setCategoryProduct($categoryProduct);
+        return parent::setPrice($price);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getPriceProduct(): ?float
+    public function getPricer(): ?float
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPriceProduct', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPricer', []);
 
-        return parent::getPriceProduct();
+        return parent::getPricer();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setPriceProduct(float $priceProduct): \App\Entity\Product
+    public function setPricer(float $pricer): \App\Entity\Product
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPriceProduct', [$priceProduct]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPricer', [$pricer]);
 
-        return parent::setPriceProduct($priceProduct);
+        return parent::setPricer($pricer);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getQuantity(): ?int
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getQuantity', []);
+
+        return parent::getQuantity();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setQuantity(int $quantity): \App\Entity\Product
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setQuantity', [$quantity]);
+
+        return parent::setQuantity($quantity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getImages(): \Doctrine\Common\Collections\Collection
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImages', []);
+
+        return parent::getImages();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addImage(\App\Entity\Image $image): \App\Entity\Product
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addImage', [$image]);
+
+        return parent::addImage($image);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeImage(\App\Entity\Image $image): \App\Entity\Product
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeImage', [$image]);
+
+        return parent::removeImage($image);
     }
 
     /**
@@ -310,6 +365,61 @@ class Product extends \App\Entity\Product implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, '__toString', []);
 
         return parent::__toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCategoryProduct()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategoryProduct', []);
+
+        return parent::getCategoryProduct();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCategoryProduct($categoryProduct): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCategoryProduct', [$categoryProduct]);
+
+        parent::setCategoryProduct($categoryProduct);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getProdectOrders()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProdectOrders', []);
+
+        return parent::getProdectOrders();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setProdectOrders($prodectOrders): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProdectOrders', [$prodectOrders]);
+
+        parent::setProdectOrders($prodectOrders);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPromo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPromo', []);
+
+        return parent::getPromo();
     }
 
 }

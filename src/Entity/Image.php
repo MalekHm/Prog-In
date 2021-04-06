@@ -24,8 +24,14 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $event;
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $product;
 
     public function getId(): ?int
     {
@@ -55,4 +61,21 @@ class Image
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param mixed $product
+     */
+    public function setProduct($product): void
+    {
+        $this->product = $product;
+    }
+
 }

@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <!-- Home -->
+
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/blog_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Mes favoris</div>
+        </div>
+    </div>
+
+    <!-- Blog -->
+
+    <div class="blog">
+        <div class="container">
+            <div class="row">
+
+                <!-- Blog Content -->
+                                    {% set fa = 'true' %}
+
+{% for b in blogs %}
+
+                                                        {% set test8 = 'true' %}
+ {% for blog in b.favoris %}   
+  {% if blog.id == app.user.id %}
+
+                                                         {% set fa = 'false' %}
+           
+                                                    
+                                        {% set test8 = 'false' %}
+
+                                               {% endif %}
+                                               {% endfor %}
+                                                 {% if test8 == 'false' %}
+                <div class="col-lg-8">
+
+                    <div class="blog_post_container">
+
+                        <!-- Blog Post -->
+
+
+                        <!-- Blog Post -->
+
+
+                        <!-- Blog Post -->
+
+                        <div class="blog_post">
+                            <div class="blog_post_image">
+                                <img src="{{ asset('uploads/images/' ~ b.picture) }}" alt="https://unsplash.com/@stilclassics">
+                            </div>
+                        <div class="blog_post_meta">
+                                <ul>
+                                    <li class="blog_post_meta_item"><a href=""><i class="fa fa-user-circle"> </i> {{b.community.grpName}} </a></li>
+        
+                                  <li class="blog_post_meta_item"><a href=""><i class="fa fa-comment ">Comment</i> {{b.commentArticles|length}} </a></li>
+                                        <li class="blog_post_meta_item"><a href=""><i class="fa fa-clock-o"> </i> {{b.DateAjout |date() }}</a></li>
+                                    <li class="blog_post_meta_item">
+
+                                    {% set test = 'false' %}
+
+                    {% set test2 = 'false' %}
+
+ {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+ {% for blog in b.likes %}
+                    {% set test2 = 'true' %}
+
+
+
+                                 {% if blog.id == app.user.id %}
+                                
+                <form action="{{ path('remove_like') }}" method ="post">
+
+                                        <input type="hidden" value="{{b.id}}" name="id">
+
+                    {{b.likes|length}}  <button class="btn btn-small btn-info" href="#">  <a class="fa fa-thumbs-o-up"   >  </a> </button>
+                    {{b.dislike|length}} <button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-down "  >  </a> </button>
+
+                    </form>
+                    {% set test = 'true' %}
+                    {% set test2 = 'true' %}
+
+
+                                   {% endif %}
+{% endfor %}
+
+                                 {% if test == "false" and test2 == "true"  %}   
+                 
+         <form action="{{ path('add_like') }}" method ="post">
+                    
+                                        <input type="hidden" value="{{b.id}}" name="id">
+
+             {{b.likes|length}}  <button class="btn btn-small btn-info" href="#">   <a class="fa fa-thumbs-up "  >  </a> </button>
+             {{b.dislike|length}}<button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-o-down "   > </a></button>
+                    </form>
+                 {% endif %}
+                                                
+                                 {% if test2 == "false"  %}                    
+                      <form action="{{ path('add_like') }}" method ="post">
+                    
+                                        <input type="hidden" value="{{b.id}}" name="id">
+                          {{b.likes|length}} <button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-up "   >  </a> </button>
+                          {{b.dislike|length}}  <button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-down "  > </a>      </button>               </form>
+    {% endif %}
+
+ {% endif %}
+                                    </li>
+                                    <li class="blog_post_meta_item">
+                     {% set test3 = 'false' %}
+
+ {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% if b.favoris is null or b.favoris is not defined %}
+<form action="{{ path('add_favoris') }}" method ="post">
+                    
+                                        <input type="hidden" value="{{b.id}}" name="id">
+
+    {{b.Favoris|length}}<button class="btn btn-small btn-danger" href="#"><a class="fa fa-heart-o "  > </a>  </button>
+
+                    </form>
+   {% endif %}
+
+
+ {% for blog in b.favoris %}   
+  {% if blog.id == app.user.id %}
+                                
+                                                    <form action="{{ path('remove_favoris') }}" method ="post">
+                    
+                                        <input type="hidden" value="{{b.id}}" name="id">
+
+                                                        {{b.Favoris|length}}    <button class="btn btn-small btn-danger" href="#">   <a class="fa fa-heart "  > </a> </button>
+
+                    </form>
+                                        {% set test3 = 'true' %}
+
+                                               {% endif %}
+                                               {% endfor %}
+
+
+ {% if test3 == 'false' %}
+                               <form action="{{ path('add_favoris') }}" method ="post">
+                    
+                                        <input type="hidden" value="{{b.id}}" name="id">
+
+                                   {{b.Favoris|length}}  <button class="btn btn-small btn-danger" href="#"><a class="fa fa-heart-o "  > </a>  </button>
+
+                    </form>
+
+ {% endif %}             
+                            {% endif %}
+
+            
+                                                                                         </li>
+                                </ul>
+                            </div>
+                            <div class="blog_post_title"><a href="#">{{ b.title }}</a></div>
+                            <div class="blog_post_text">
+                                <p>{{ b.description }}</p>
+                            </div>
+                            <div class="blog_post_title"><a href="#">Commentaire</a></div>
+                           
+
+                            {% for c in b.commentArticles %}
+
+                            <div class="blog_post_text">
+                   <p>{{ c.user.username }} : {{ c.contenu }}
+
+                            <form method="post" action="{{ path('comment_article_delete', {'id': c.id}) }}" onsubmit="return confirm('Vous voulez supprimer votre commentaire?');">
+
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                                 {% if c.user.id == app.user.id %}
+
+                                    <button class="btn btn-danger" href="#">
+                                        Delete <a class="fa fa-trash-o "> </a> </button>
+
+    <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="idb" value="{{c.blogs.id}}">
+
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ c.id) }}">
+</form>
+
+                                                             {% endif %}
+                                                             {% endif %}
+                                 </p>
+
+                                              </div>
+    
+
+                            {% endfor %}
+                                {% if fa == 'true' %}
+                                                            <div class="blog_post_text">
+                    Aucune favoris    </div>
+
+
+                                                                                             {% endif %}
+
+
+      </div>
+
+
+      </div>
+                </div>
+                                                                                              {% endif %}
+
+
+                            {% endfor %}
+
+                <!-- Blog Sidebar -->
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+{% endblock %}

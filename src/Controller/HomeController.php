@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Event;
+use App\Entity\Product;
+use App\Entity\Publicity;
 use App\Entity\User;
 use App\Form\ClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +22,14 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $this->getDoctrine()->getRepository(Publicity::class)->findOneBy(['position'=>'TOP']);
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'publicitys'=> []
+            'publicitytop'=> $this->getDoctrine()->getRepository(Publicity::class)->findOneBy(['position'=>'TOP']),
+            'publicitybottom'=>$this->getDoctrine()->getRepository(Publicity::class)->findOneBy(['position'=>'BOTTOM']),
+            'events'=>$this->getDoctrine()->getRepository(Event::class)->findBy(array(),null,3),
+                        'products'=>$this->getDoctrine()->getRepository(Product::class)->findBy(array(),null,3)
+
 
         ]);
     }

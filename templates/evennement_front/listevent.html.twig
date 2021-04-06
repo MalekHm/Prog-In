@@ -85,6 +85,7 @@
                                         <!-- Image by https://unsplash.com/@itsnwa -->
                                         <div class="offers_image_background" style="background-image:url({{ asset('/event/') }}{{ i.images[0].source }})"></div>
                                         <div class="offer_name"><a href="#">{{ i.startDate | date('d-m-Y') }}</a></div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -112,8 +113,12 @@
                                                 <div class="offer_reviews_title">{{ i.Category }}</div>
 
                                                 <div class="offer_reviews_subtitle">{{ i.nbPersons }} Personnes</div>
+                                                {% if i.Promo %}
+                                                <div class="offer_reviews_subtitle">{{ i.Promo }} nouveau prix</div>
+                                                {% endif %}
                                             </div>
                                             <div class="offer_reviews_rating text-center">{{ i.priceEvent }}DT <span></span></div>
+
                                         </div>
                                     </div>
                                 </div>

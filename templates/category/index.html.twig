@@ -1,0 +1,49 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+
+{% block content %}
+    <h1>Table de categorie</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom de la categorie</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.nameCategory }}</td>
+                <td>
+                    <a href="{{ path('category_show', {'id': category.id}) }}">
+                        <button type="button" class="btn btn-info">Afficher</button>
+                    </a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}">
+                        <button type="button" class="btn btn-success">Modifier</button>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row mt-3">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <a href="{{ path('category_new') }}">
+                <center>
+                    <button type="submit" class="btn btn-light btn-round px-5">Ajouter une categorie</button>
+                </center></a>
+        </div>
+        <div class="col-lg-3"></div>
+    </div><!--End Row-->
+
+{% endblock %}

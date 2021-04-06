@@ -1,0 +1,103 @@
+{% extends 'baseBack.html.twig' %}
+{% block content %}
+
+
+
+
+            <div class="row mt-3">
+                <div class="col-lg-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" align="center">LISTE DES RECOMMANDATIONS</h5>
+                            <div class="table-responsive">
+
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+
+                                        <th scope="col"  align="center">Titre </th>
+                                        <th scope="col"  align="center">Catégorie</th>
+
+                                        <th scope="col"  align="center">Adresse</th>
+                                        <th scope="col" align="center"><center>Actions</center> </th>
+                                        <th scope="col"  align="center">Affichée</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for p in places %}
+                                    <tr>
+
+
+                                        <td>{{ p.titlePlace }}</td>
+                                        <td>{{ p.category }}</td>
+
+
+                                        <td>{{ p.location }}</td>
+                                        <td  align="center"> <!-- Call to action buttons -->
+                                            <ul class="list-inline m-0">
+
+                                                <li class="list-inline-item">
+                                                    <a href="{{ path('place_update', {'id': p.id}) }}">
+                                                    <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Modifier"><i class="fa fa-edit"></i></button>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="{{ path('place_delete', {'id': p.id}) }}">
+                                                        <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Supprimer"><i class="fa fa-trash"></i></button>
+                                                    </a>
+                                                  </li>
+                                                <li class="list-inline-item">
+                                                    <a href="{{ path('place_listcomment', {'id': p.id}) }}">
+                                                        <button class="btn btn-secondary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Commentaires"><i class="fa fa-list"></i></button>
+                                                    </a>
+                                                </li>
+                                                {% if(p.showPlace==1) %}
+                                                <td>OUI</td>
+                                        {% else %}
+                                            <td>NON</td>
+                                            {% endif %}
+
+                                            </ul></td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    {% for c in categories %}
+                        <br>
+                        <a href="{{ path('place_listcategory',{'id':c.id}) }}"><center><button type="submit" class="btn btn-light btn-round px-5">{{ c.nameCategoryPlace }}</button></center></a>
+                    {% endfor %}
+                </div>
+            </div>
+    <!--End Row-->
+    <div class="row mt-3">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <a href="{{ path('place_add') }}"><center><button type="submit" class="btn btn-light btn-round px-5">Ajouter une recommandation</button></center></a>
+        </div>
+        <div class="col-lg-3"></div>
+    </div><!--End Row-->
+    <div class="row mt-3">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <a href="{{ path('category_placelist') }}"><center><button type="submit" class="btn btn-light btn-round px-5">Afficher les catégories</button></center></a>
+        </div>
+        <div class="col-lg-3"></div>
+    </div><!--End Row-->
+            <!--start overlay-->
+            <div class="overlay toggle-menu"></div>
+            <!--end overlay-->
+
+
+
+
+
+
+
+{% endblock %}

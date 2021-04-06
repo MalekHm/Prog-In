@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <!-- Home -->
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/blog_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Blog</div>
+        </div>
+    </div>
+
+
+    <!-- Blog -->
+
+    <div class="blog">
+        <div class="container">
+            <div class="row">
+
+                <!-- Blog Content -->
+                <div class="col-lg-8">
+
+                    <div class="blog_post_container">
+
+                        <!-- Blog Post -->
+                        <div class="blog_post">
+                            <div class="blog_post_image">
+                                <img src="{{ asset('uploads/images/' ~ blog.picture) }}" alt="https://unsplash.com/@stilclassics">
+
+                            </div>
+                        </div>
+                        <div class="blog_post_meta">
+                            <ul>
+                                <li class="blog_post_meta_item"><a href=""><i class="fa fa-user-circle"> </i> {{blog.community.grpName}} </a></li>
+                                <li class="blog_post_meta_item"><a href=""><i class="fa fa-comment "> Comment</i> {{blog.commentArticles|length}} </a></li>
+                                <li class="blog_post_meta_item"><a href=""><i class="fa fa-clock-o"> </i> {{blog.DateAjout |date() }}</a></li>
+                                <li class="blog_post_meta_item">
+
+
+                                    {% set test = 'false' %}
+
+                                    {% set test2 = 'false' %}
+
+                                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                                        {% for b in blog.likes %}
+                                            {% set test2 = 'true' %}
+
+
+
+                                            {% if b.id == app.user.id %}
+
+                                                <form action="{{ path('remove_like') }}" method ="post">
+
+                                                    <input type="hidden" value="{{blog.id}}" name="id">
+
+                                                    {{blog.likes|length}}   <button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-o-up "   >  </a> </button>
+                                                    {{blog.dislike|length}}      <button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-down "  >  </a> </button>
+
+                                                </form>
+                                                {% set test = 'true' %}
+                                                {% set test2 = 'true' %}
+
+
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if test == "false" and test2 == "true"  %}
+
+                                            <form action="{{ path('add_like') }}" method ="post">
+
+                                                <input type="hidden" value="{{blog.id}}" name="id">
+
+                                                {{blog.likes|length}}   <button class="btn btn-info" href="#"> <a class="fa fa-thumbs-up  "  >  </a> </button>
+                                                {{blog.dislike|length}} <button class="btn btn-info" href="#"> <a class="fa fa-thumbs-o-down "   > </a> </button>
+
+                                            </form>
+                                        {% endif %}
+
+                                        {% if test2 == "false"  %}
+                                            <form action="{{ path('add_like') }}" method ="post">
+
+                                                <input type="hidden" value="{{blog.id}}" name="id">
+
+                                                {{blog.likes|length}}   <button class="btn btn-info" href="#">   <a class="fa fa-thumbs-up  "   > </a> </button>
+                                                {{blog.dislike|length}}      <button class="btn btn-small btn-info" href="#"> <a class="fa fa-thumbs-down "  ></a> </button>             </form>
+                                        {% endif %}
+
+                                    {% endif %}
+
+
+
+
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="blog_post_title"><a href="#">{{ blog.title }}</a></div>
+                        <div class="blog_post_text">
+                            <p>{{ blog.description }}</p>
+                        </div>
+                        <div class="blog_post_title"><a href="#">Commentaire</a></div>
+
+
+                        {% for b in blog.commentArticles %}
+
+                            <div class="blog_post_text">
+                                <form method="post" action="{{ path('comment_article_delete', {'id': b.id}) }}" onsubmit="return confirm('Vous voulez supprimer votre commentaire?');">
+
+                                    <p>{{ b.user.username }} : {{ b.contenu }}
+                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                                        {% if b.user.id == app.user.id %}
+
+                                        <button class="btn btn-danger" href="#"> Delete <a class="fa fa-trash-o "> </a> </button>
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="idb" value="{{b.blogs.id}}">
+
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ b.id) }}">
+                                </form>
+
+                                {% endif %}
+                                {% endif %}
+                                </p>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <form action="{{ path('comment_article_new') }}" method ="post">
+
+                        <input type="text" name="comment">
+                        <input type="hidden" value="{{blog.id}}" name="id">
+
+                        <input type="submit">
+                    </form>
+
+
+                </div>
+
+                        <!-- Blog Post -->
+
+
+                        <!-- Blog Post -->
+
+
+                <!-- Blog Sidebar -->
+
+
+            </div>
+        </div>
+    </div>
+
+  {% endblock %}

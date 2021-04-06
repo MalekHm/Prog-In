@@ -1,2 +1,168 @@
 {% extends 'base.html.twig' %}
 
+{% block content %}
+
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('front/images/about_background.jpg') }}"></div>
+        <div class="home_content">
+            <div class="home_title">Home</div>
+        </div>
+    </div>
+<br>
+    <br>
+
+{% if publicitytop %}
+
+<a href="{{ publicitytop.link }}">
+
+
+    <div class="add">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="add_container">
+                        <div class="add_background" style="background-image:url({{ asset('/publicity/') }}{{ publicitytop.picturePub }})"></div>
+                        <div class="add_content">
+                            <h1 class="add_title">{{ publicitytop.titlePub }}</h1>
+                            <div class="add_subtitle"> <p class="text-white">{{ publicitytop.descriptionPub }}</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</a>
+{% endif %}
+
+
+<br>
+    <br>
+
+
+    <div class="offers">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="section_title">our events</h2>
+                </div>
+            </div>
+            <div class="row offers_items">
+
+
+
+                {% for i in events %}
+                    <div class="col-lg-6 offers_col">
+                        <div class="offers_item">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="offers_image_container">
+                                        <!-- Image by https://unsplash.com/@mantashesthaven -->
+                                        <div class="offers_image_background" style="background-image:url({{ asset('/event/') }}{{ i.images[0].source }})"></div>
+                                        <div class="offer_name"><a href="#">{{ i.titre }}</a></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="offers_content">
+                                        <div class="offers_price">{{ i.priceEvent }}<span>Vente</span></div>
+
+
+                                        <p class="offers_text">{{ i.description }}</p>
+                                        <div class="offers_icons">
+                                            <ul class="offers_icons_list">
+                                                <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
+                                                <li class="offers_icons_item"><img src="images/compass.png" alt=""></li>
+                                                <li class="offers_icons_item"><img src="images/bicycle.png" alt=""></li>
+                                                <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
+                                            </ul>
+                                        </div>
+                                        <div class="offers_link"><a href="{{ path('evennement_show',{'id':i.id}) }}">Consulter</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="offers">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="section_title">our products</h2>
+                </div>
+            </div>
+            <div class="row offers_items">
+
+
+
+               {% for i in products %}
+                <div class="col-lg-6 offers_col">
+                    <div class="offers_item">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="offers_image_container">
+                                    <!-- Image by https://unsplash.com/@mantashesthaven -->
+                                    <div class="offers_image_background" style="background-image:url({{ asset('/product/') }}{{ i.images[0].source }})"></div>
+                                    <div class="offer_name"><a href="#">{{ i.name }}</a></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="offers_content">
+                                    <div class="offers_price">{{ i.price }}<span>Vente</span></div>
+                                    <div class="offers_price">{{ i.pricer }}<span>Location</span></div>
+
+
+                                    <p class="offers_text">{{ i.description }}</p>
+                                    <div class="offers_icons">
+                                        <ul class="offers_icons_list">
+                                            <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
+                                            <li class="offers_icons_item"><img src="images/compass.png" alt=""></li>
+                                            <li class="offers_icons_item"><img src="images/bicycle.png" alt=""></li>
+                                            <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
+                                        </ul>
+                                    </div>
+                                    <div class="offers_link"><a href="{{ path('product_reserver',{'id':i.id}) }}">Réserver</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {% if publicitybottom %}
+
+        <a href="{{ publicitybottom.link }}">
+
+
+            <div class="add">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="add_container">
+                                <div class="add_background" style="background-image:url({{ asset('/publicity/') }}{{ publicitybottom.picturePub }})"></div>
+                                <div class="add_content">
+                                    <h1 class="add_title">{{ publicitybottom.titlePub }}</h1>
+                                    <div class="add_subtitle"> <p class="text-white">{{ publicitybottom.descriptionPub }}</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </a>
+    {% endif %}
+
+{% endblock %}

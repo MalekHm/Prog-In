@@ -1,0 +1,48 @@
+<?php //%255BApp%255CEntity%255CBlog%2524picture%255D%255B1%255D
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\Column'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\Column')),
+        clone ($p['Symfony\\Component\\Validator\\Constraints\\File'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Validator\\Constraints\\File')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'image1',
+            ],
+            'length' => [
+                255,
+            ],
+            'nullable' => [
+                true,
+            ],
+            'binaryFormat' => [
+                1 => false,
+            ],
+            'mimeTypes' => [
+                1 => [
+                    'image/jpeg',
+                    'image/jpg',
+                    'image/png',
+                    'image/GIF',
+                ],
+            ],
+            'groups' => [
+                1 => [
+                    'Default',
+                ],
+            ],
+        ],
+        'Symfony\\Component\\Validator\\Constraints\\File' => [
+            'maxSize' => [
+                1 => 500000,
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+); }];

@@ -1068,6 +1068,17 @@ section
 	float: left;
 	z-index: 2;
 }
+.latest_post_image img
+{
+	float: left;
+	max-height: 73px; !important;
+	max-width: 73px;!important;
+	margin:auto;
+	border:0;
+	display:block;
+
+	position:relative;
+}
 .latest_post_content
 {
 	padding-left: 98px;

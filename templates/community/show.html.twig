@@ -1,0 +1,38 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Community{% endblock %}
+
+{% block content %}
+    <h1>Community</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ community.id }}</td>
+            </tr>
+            <tr>
+                <th>Grp_name</th>
+                <td>{{ community.grpName }}</td>
+            </tr>
+            <tr>
+                <th>Email  </th>
+                <td>{{ community.email }}</td>
+            </tr>
+            <tr>
+                <th>Phone  <i class="fa fa-phone "  > </i></th>
+                <td>{{ community.phone }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ community.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('community_index') }}">  <i class="fa fa-long-arrow-left" > </i> Back to list</a>
+
+    <a href="{{ path('community_edit', {'id': community.id}) }}">Edit</a>
+
+    {{ include('community/_delete_form.html.twig') }}
+{% endblock %}
